@@ -2,8 +2,9 @@
 <html>
   <head>
     <script>
-      var path = window.location.pathname.replace('/robotalliance', '') + window.location.search + window.location.hash;
-      window.location.replace('/robotalliance/?p=' + encodeURIComponent(path));
+      var l = window.location;
+      var path = l.pathname.slice('/robotalliance'.length) || '/';
+      l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/robotalliance/?p=' + encodeURIComponent(path + l.search + l.hash));
     </script>
   </head>
 </html>
