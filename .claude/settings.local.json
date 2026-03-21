@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"import\\(''''./src/data/mockData.js''''\\).then\\(m => console.log\\(''''leadership ids:'''', m.leadership.map\\(l=>l.id\\)\\), e => console.error\\(e\\)\\)\")",
+      "Bash(npx vite:*)",
+      "Bash(ls \"c:\\\\Users\\\\lukel\\\\Downloads\\\\robot alliance\\\\myapp\\\\public\"\" 2>/dev/null || echo \"no public dir \")",
+      "Bash(find /c/Users/lukel/AppData/Local/Temp -name *.jpg -o -name *.png -o -name *.jpeg)",
+      "Bash(xargs ls:*)",
+      "Bash(find /c/Users/lukel/.claude -name *.jpg -o -name *.png -o -name *.jpeg)",
+      "Bash(find /c/Users/lukel/AppData/Roaming/Code -name *.png -newer '/c/Users/lukel/Downloads/robot alliance/myapp/package.json')",
+      "Bash(find /c/Users/lukel/AppData/Local/Temp -name *.png -newer '/c/Users/lukel/Downloads/robot alliance/myapp/package.json')",
+      "Bash(find /c/Users/lukel/AppData/Local -maxdepth 4 -name *.jpg -newer '/c/Users/lukel/Downloads/robot alliance/myapp/vite.config.js')",
+      "Bash(find /c/Users/lukel -maxdepth 3 -name *.jpg -o -name *.jpeg)",
+      "WebSearch",
+      "WebFetch(domain:www.tessventures.com)",
+      "WebFetch(domain:www.tessventures.xyz)",
+      "WebFetch(domain:coinagenda.com)",
+      "WebFetch(domain:sloaninvestmentconference.org)",
+      "WebFetch(domain:www.outeredge.live)",
+      "WebFetch(domain:www.rootdata.com)",
+      "WebFetch(domain:theorg.com)",
+      "WebFetch(domain:www.crunchbase.com)",
+      "WebFetch(domain:commons.wikimedia.org)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "WebFetch(domain:jimfan.me)",
+      "WebFetch(domain:icra-2024-humanoid.github.io)",
+      "WebFetch(domain:agilityrobotics.com)",
+      "WebFetch(domain:engineering.oregonstate.edu)",
+      "WebFetch(domain:www.roboticssummit.com)",
+      "WebFetch(domain:bostondynamics.com)",
+      "WebFetch(domain:figure.ai)",
+      "WebFetch(domain:techcrunch.com)",
+      "WebFetch(domain:research.nvidia.com)",
+      "WebFetch(domain:www.forbes.com)",
+      "WebFetch(domain:www.robohub.org)",
+      "WebFetch(domain:www.cs.cmu.edu)",
+      "Bash(xargs sed:*)"
+    ]
+  }
+}

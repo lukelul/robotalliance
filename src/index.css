@@ -1,0 +1,321 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── CSS variables ───────────────────────────────────────────────────────── */
+
+:root {
+  --bg: #020814;
+  --surface: rgba(4, 13, 26, 0.28);
+  --surface-solid: rgba(4, 13, 26, 0.85);
+  --border: rgba(14, 165, 233, 0.1);
+  --text: #e2e8f0;
+  --text-muted: rgba(147, 197, 253, 0.5);
+  --accent: #06b6d4;
+  --input-bg: rgba(14, 165, 233, 0.04);
+  --main-bg: rgba(2, 8, 20, 0.08);
+}
+
+[data-theme="light"] {
+  --bg: #d8e4f0;
+  --surface: rgba(255, 255, 255, 0.94);
+  --surface-solid: rgba(255, 255, 255, 0.99);
+  --border: rgba(14, 100, 200, 0.25);
+  --text: #0f172a;
+  --text-muted: rgba(51, 65, 85, 0.7);
+  --accent: #0284c7;
+  --input-bg: rgba(14, 100, 200, 0.06);
+  --main-bg: rgba(14, 100, 200, 0.03);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+  transition: background 0.3s ease, color 0.2s ease;
+}
+
+/* Light mode body override (handles canvas behind panels) */
+[data-theme="light"] body {
+  background: #d8e4f0;
+}
+
+[data-theme="light"] #root {
+  background: transparent;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #040d1a; }
+::-webkit-scrollbar-thumb { background: #0ea5e9; border-radius: 3px; }
+
+.glass {
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(14, 100, 200, 0.2);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Give panels visible borders and shadows in light mode */
+[data-theme="light"] .border-blue-500\/10 {
+  border-color: rgba(14, 100, 200, 0.18) !important;
+}
+
+[data-theme="light"] .border-blue-500\/15 {
+  border-color: rgba(14, 100, 200, 0.22) !important;
+}
+
+[data-theme="light"] .rounded-xl,
+[data-theme="light"] .rounded-2xl {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+}
+
+/* Scrollbar for light mode */
+[data-theme="light"] ::-webkit-scrollbar-track { background: #d0dcea; }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: #0284c7; }
+
+/* Text overrides for light mode */
+[data-theme="light"] .text-blue-300\/50,
+[data-theme="light"] .text-blue-300\/40,
+[data-theme="light"] .text-blue-300\/30 {
+  color: rgba(51, 65, 85, 0.65) !important;
+}
+
+[data-theme="light"] .text-white {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .text-blue-100\/80,
+[data-theme="light"] .text-blue-100\/70 {
+  color: rgba(15, 23, 42, 0.75) !important;
+}
+
+[data-theme="light"] .text-blue-300\/60 {
+  color: rgba(51, 65, 85, 0.7) !important;
+}
+
+[data-theme="light"] .divide-blue-500\/10 > * + * {
+  border-color: rgba(14, 100, 200, 0.14) !important;
+}
+
+/* ── Very faint text classes ──────────────────────────────────────────── */
+
+[data-theme="light"] .text-blue-300\/25,
+[data-theme="light"] .text-blue-300\/20,
+[data-theme="light"] .text-blue-300\/15 {
+  color: rgba(51, 65, 85, 0.5) !important;
+}
+
+[data-theme="light"] .text-blue-300\/08 {
+  color: rgba(51, 65, 85, 0.4) !important;
+}
+
+/* hover:text-white would render invisible on light bg */
+[data-theme="light"] .hover\:text-white:hover {
+  color: #0f172a !important;
+}
+
+/* Input/form areas */
+[data-theme="light"] .placeholder-blue-300\/25::placeholder,
+[data-theme="light"] .placeholder-blue-300\/30::placeholder {
+  color: rgba(51, 65, 85, 0.4) !important;
+}
+
+/* PostCard */
+[data-theme="light"] .border-blue-500\/08,
+[data-theme="light"] .border-blue-500\/10 {
+  border-color: rgba(14, 100, 200, 0.15) !important;
+}
+
+/* Active channel selected state — bg is fine, but ensure text is dark */
+[data-theme="light"] .bg-blue-500\/20 {
+  background-color: rgba(29, 78, 216, 0.12) !important;
+}
+
+/* Green status bg in voice channel */
+[data-theme="light"] .bg-green-500\/10 {
+  background-color: rgba(22, 101, 52, 0.1) !important;
+}
+
+[data-theme="light"] .border-green-500\/20 {
+  border-color: rgba(22, 101, 52, 0.2) !important;
+}
+
+/* ── Colored badge / tag text — darken in light mode ───────────────────── */
+
+[data-theme="light"] .text-green-300,
+[data-theme="light"] .text-green-400 {
+  color: #166534 !important;
+}
+
+[data-theme="light"] .text-blue-300,
+[data-theme="light"] .text-blue-400 {
+  color: #1d4ed8 !important;
+}
+
+[data-theme="light"] .text-cyan-300,
+[data-theme="light"] .text-cyan-400 {
+  color: #0369a1 !important;
+}
+
+[data-theme="light"] .text-yellow-300,
+[data-theme="light"] .text-yellow-400 {
+  color: #92400e !important;
+}
+
+[data-theme="light"] .text-purple-300,
+[data-theme="light"] .text-purple-400 {
+  color: #6b21a8 !important;
+}
+
+[data-theme="light"] .text-pink-300,
+[data-theme="light"] .text-pink-400 {
+  color: #9d174d !important;
+}
+
+[data-theme="light"] .text-orange-400 {
+  color: #c2410c !important;
+}
+
+[data-theme="light"] .text-red-400 {
+  color: #b91c1c !important;
+}
+
+/* Badge background tints — slightly more saturated so text is legible */
+[data-theme="light"] .bg-green-500\/20 { background-color: rgba(22, 101, 52, 0.1) !important; }
+[data-theme="light"] .bg-blue-500\/20  { background-color: rgba(29, 78, 216, 0.1) !important; }
+[data-theme="light"] .bg-cyan-500\/20  { background-color: rgba(3, 105, 161, 0.1) !important; }
+[data-theme="light"] .bg-yellow-500\/20 { background-color: rgba(146, 64, 14, 0.1) !important; }
+[data-theme="light"] .bg-purple-500\/20 { background-color: rgba(107, 33, 168, 0.1) !important; }
+[data-theme="light"] .bg-pink-500\/20   { background-color: rgba(157, 23, 77, 0.1) !important; }
+[data-theme="light"] .bg-orange-500\/20 { background-color: rgba(194, 65, 12, 0.1) !important; }
+
+/* Border tints on badges */
+[data-theme="light"] .border-green-500\/30 { border-color: rgba(22, 101, 52, 0.25) !important; }
+[data-theme="light"] .border-blue-500\/30  { border-color: rgba(29, 78, 216, 0.25) !important; }
+[data-theme="light"] .border-cyan-500\/30  { border-color: rgba(3, 105, 161, 0.25) !important; }
+[data-theme="light"] .border-yellow-500\/30 { border-color: rgba(146, 64, 14, 0.25) !important; }
+[data-theme="light"] .border-purple-500\/30 { border-color: rgba(107, 33, 168, 0.25) !important; }
+[data-theme="light"] .border-pink-500\/30  { border-color: rgba(157, 23, 77, 0.25) !important; }
+
+/* ── Landing page: force dark rendering regardless of theme ─────────── */
+/* Nav + cards always use dark glass (inline styles), so text must stay light */
+[data-theme="light"] .landing-page .text-white,
+[data-theme="light"] .landing-page .hover\:text-white:hover { color: #ffffff !important; }
+
+/* Body / muted text inside dark glass cards — keep readable light colors */
+[data-theme="light"] .landing-page .text-blue-300\/60 { color: rgba(147, 197, 253, 0.75) !important; }
+[data-theme="light"] .landing-page .text-blue-300\/55 { color: rgba(147, 197, 253, 0.72) !important; }
+[data-theme="light"] .landing-page .text-blue-300\/50 { color: rgba(147, 197, 253, 0.68) !important; }
+[data-theme="light"] .landing-page .text-blue-300\/45 { color: rgba(147, 197, 253, 0.62) !important; }
+[data-theme="light"] .landing-page .text-blue-300\/40 { color: rgba(147, 197, 253, 0.55) !important; }
+[data-theme="light"] .landing-page .text-blue-300\/35 { color: rgba(147, 197, 253, 0.48) !important; }
+[data-theme="light"] .landing-page .text-blue-300\/30 { color: rgba(147, 197, 253, 0.42) !important; }
+[data-theme="light"] .landing-page .text-blue-300\/25 { color: rgba(147, 197, 253, 0.35) !important; }
+
+/* Accent / cyan stays vibrant */
+[data-theme="light"] .landing-page .text-cyan-400   { color: #22d3ee !important; }
+[data-theme="light"] .landing-page .text-cyan-400\/70 { color: rgba(34, 211, 238, 0.8) !important; }
+[data-theme="light"] .landing-page .text-cyan-400\/60 { color: rgba(34, 211, 238, 0.72) !important; }
+[data-theme="light"] .landing-page .text-cyan-300   { color: #67e8f9 !important; }
+[data-theme="light"] .landing-page .hover\:text-cyan-300:hover { color: #67e8f9 !important; }
+
+/* Hero h1 — keep gradient visible, force first line white not dark */
+[data-theme="light"] .landing-page h1 { color: #ffffff !important; }
+[data-theme="light"] .landing-page .rounded-xl,
+[data-theme="light"] .landing-page .rounded-2xl { box-shadow: none; }
+
+.glow-blue {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in {
+  animation: slide-in 0.3s ease forwards;
+}
+
+/* ── Launch / refresh intro animations ─────────────────────────────── */
+
+@keyframes canvas-boot {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Canvas fades in over 900ms — JS transform still overrides freely */
+.canvas-boot {
+  animation: canvas-boot 0.9s ease forwards;
+}
+
+/* Content block slides up — opacity is handled separately by React state */
+@keyframes content-slide-up {
+  from { transform: translateY(20px); }
+  to   { transform: translateY(0);   }
+}
+
+.content-boot {
+  animation: content-slide-up 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+/* ── Page enter animation (fires on every route mount) ──────────────── */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-enter {
+  animation: page-enter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Landing page platform-enter transition ─────────────────────────── */
+@keyframes portal-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.portal-overlay {
+  animation: portal-in 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+
+/* ── Landing hero glow pulse ────────────────────────────────────────── */
+@keyframes glow-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(20px, -15px) scale(1.05); }
+  66%       { transform: translate(-15px, 10px) scale(0.97); }
+}
+.glow-drift { animation: glow-drift 12s ease-in-out infinite; }
+
+/* ── Fade-up stagger for landing sections ───────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up-1 { animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s both; }
+.fade-up-2 { animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.22s both; }
+.fade-up-3 { animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.34s both; }
+.fade-up-4 { animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) 0.46s both; }
