@@ -58,7 +58,8 @@ export default function TopBar({ onSearch }) {
   const peopleResults = results.filter(r => r._kind === 'person')
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-14 glass border-b border-blue-500/10 flex items-center px-4 gap-4">
+    <header className="fixed top-0 left-0 right-0 z-50 h-16 glass border-b border-blue-500/10 flex items-center px-4 gap-4"
+      style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
       {/* Logo */}
       <button onClick={() => navigate('/')} className="shrink-0 group">
         <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-cyan-500/30 group-hover:opacity-90 transition-opacity">
@@ -154,13 +155,15 @@ export default function TopBar({ onSearch }) {
       <div className="shrink-0 hidden md:flex items-center gap-1">
         <button
           onClick={() => navigate('/leadership')}
-          className="text-xs font-semibold tracking-widest uppercase text-blue-300/40 hover:text-cyan-300 transition-colors px-2 py-1 rounded border border-transparent hover:border-blue-500/20"
+          className="text-sm font-medium text-blue-300/40 hover:text-gray-900 transition-colors px-3 py-2"
+          style={{ color: 'inherit' }}
         >
           Leadership
         </button>
         <button
           onClick={() => navigate('/welcome')}
-          className="text-xs font-semibold tracking-widest uppercase text-blue-300/40 hover:text-cyan-300 transition-colors px-2 py-1 rounded border border-transparent hover:border-blue-500/20"
+          className="text-sm font-medium text-blue-300/40 hover:text-gray-900 transition-colors px-3 py-2"
+          style={{ color: 'inherit' }}
         >
           About
         </button>
@@ -171,7 +174,7 @@ export default function TopBar({ onSearch }) {
         {isGuest ? (
           <button
             onClick={() => setShowAuthModal(true)}
-            className="px-4 py-1.5 rounded-lg bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-semibold hover:bg-cyan-500/30 transition-all"
+            className="rounded-full px-5 py-2 bg-[#0069b4] text-white text-sm font-semibold hover:bg-[#005a9e] transition-all"
           >
             Sign In
           </button>
@@ -183,9 +186,9 @@ export default function TopBar({ onSearch }) {
             </div>
             <button
               onClick={() => navigate('/settings')}
-              className="hover:ring-2 hover:ring-cyan-500/50 transition-all rounded-full overflow-hidden"
+              className="hover:ring-2 hover:ring-[#0069b4]/40 transition-all rounded-full overflow-hidden"
             >
-              <Avatar photo={userPhoto} avatar={profile?.avatar} color={profile?.color || 'linear-gradient(135deg, #00d4ff, #0284c7)'} size={32} />
+              <Avatar photo={userPhoto} avatar={profile?.avatar} color={profile?.color || 'linear-gradient(135deg, #00d4ff, #0069b4)'} size={32} />
             </button>
           </>
         )}

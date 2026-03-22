@@ -49,9 +49,9 @@ export default function SettingsPage() {
       <h1 className="text-2xl font-semibold tracking-tight text-white mb-6">Settings</h1>
 
       {/* Profile card */}
-      <div className="rounded-2xl border border-blue-500/10 overflow-hidden mb-5" style={panelStyle}>
+      <div className="rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-5" style={panelStyle}>
         <div className="px-6 py-4 border-b border-blue-500/10">
-          <p className="text-xs text-blue-300/40 font-semibold uppercase tracking-widest">Profile</p>
+          <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Profile</p>
         </div>
         <div className="px-6 py-5 flex items-center gap-4">
           {/* Clickable avatar — opens file picker */}
@@ -108,9 +108,9 @@ export default function SettingsPage() {
       </div>
 
       {/* Appearance */}
-      <div className="rounded-2xl border border-blue-500/10 overflow-hidden mb-5" style={panelStyle}>
+      <div className="rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-5" style={panelStyle}>
         <div className="px-6 py-4 border-b border-blue-500/10">
-          <p className="text-xs text-blue-300/40 font-semibold uppercase tracking-widest">Appearance</p>
+          <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Appearance</p>
         </div>
         <div className="px-6 py-5 flex items-center justify-between">
           <div>
@@ -150,9 +150,9 @@ export default function SettingsPage() {
       </div>
 
       {/* Network connections toggle */}
-      <div className="rounded-2xl border border-blue-500/10 overflow-hidden mb-5" style={panelStyle}>
+      <div className="rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-5" style={panelStyle}>
         <div className="px-6 py-4 border-b border-blue-500/10">
-          <p className="text-xs text-blue-300/40 font-semibold uppercase tracking-widest">Display</p>
+          <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Display</p>
         </div>
         <div className="px-6 py-5 flex items-center justify-between">
           <div>
@@ -169,9 +169,9 @@ export default function SettingsPage() {
       </div>
 
       {/* Account */}
-      <div className="rounded-2xl border border-blue-500/10 overflow-hidden" style={panelStyle}>
+      <div className="rounded-2xl border border-gray-100 shadow-sm overflow-hidden" style={panelStyle}>
         <div className="px-6 py-4 border-b border-blue-500/10">
-          <p className="text-xs text-blue-300/40 font-semibold uppercase tracking-widest">Account</p>
+          <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Account</p>
         </div>
         <div className="divide-y divide-blue-500/10">
           {[

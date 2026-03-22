@@ -22,12 +22,12 @@
   --bg: #ffffff;
   --surface: rgba(255, 255, 255, 0.94);
   --surface-solid: rgba(255, 255, 255, 0.99);
-  --border: rgba(14, 100, 200, 0.25);
+  --border: rgba(0, 105, 180, 0.15);
   --text: #0f172a;
   --text-muted: rgba(51, 65, 85, 0.7);
-  --accent: #0284c7;
-  --input-bg: rgba(14, 100, 200, 0.06);
-  --main-bg: rgba(14, 100, 200, 0.03);
+  --accent: #0069b4;
+  --input-bg: rgba(0, 105, 180, 0.05);
+  --main-bg: rgba(0, 105, 180, 0.02);
 }
 
 body {
@@ -54,7 +54,7 @@ body {
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #040d1a; }
-::-webkit-scrollbar-thumb { background: #0ea5e9; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #0069b4; border-radius: 3px; }
 
 .glass {
   background: var(--surface);
@@ -63,9 +63,10 @@ body {
 }
 
 [data-theme="light"] .glass {
-  background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(14, 100, 200, 0.2);
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  border-color: rgba(0, 105, 180, 0.15);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  backdrop-filter: none;
 }
 
 
@@ -80,22 +81,22 @@ body {
 
 [data-theme="light"] .rounded-xl,
 [data-theme="light"] .rounded-2xl {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
 /* Scrollbar for light mode */
 [data-theme="light"] ::-webkit-scrollbar-track { background: #d0dcea; }
-[data-theme="light"] ::-webkit-scrollbar-thumb { background: #0284c7; }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: #0069b4; }
 
 /* Text overrides for light mode */
 [data-theme="light"] .text-blue-300\/50,
 [data-theme="light"] .text-blue-300\/40,
 [data-theme="light"] .text-blue-300\/30 {
-  color: rgba(51, 65, 85, 0.65) !important;
+  color: rgba(55, 65, 81, 0.7) !important;
 }
 
 [data-theme="light"] .text-white {
-  color: #0f172a !important;
+  color: #111827 !important;
 }
 
 [data-theme="light"] .text-blue-100\/80,
@@ -168,7 +169,7 @@ body {
 
 [data-theme="light"] .text-cyan-300,
 [data-theme="light"] .text-cyan-400 {
-  color: #0369a1 !important;
+  color: #0069b4 !important;
 }
 
 [data-theme="light"] .text-yellow-300,
@@ -197,7 +198,7 @@ body {
 /* Badge background tints — slightly more saturated so text is legible */
 [data-theme="light"] .bg-green-500\/20 { background-color: rgba(22, 101, 52, 0.1) !important; }
 [data-theme="light"] .bg-blue-500\/20  { background-color: rgba(29, 78, 216, 0.1) !important; }
-[data-theme="light"] .bg-cyan-500\/20  { background-color: rgba(3, 105, 161, 0.1) !important; }
+[data-theme="light"] .bg-cyan-500\/20  { background-color: rgba(0, 105, 180, 0.1) !important; }
 [data-theme="light"] .bg-yellow-500\/20 { background-color: rgba(146, 64, 14, 0.1) !important; }
 [data-theme="light"] .bg-purple-500\/20 { background-color: rgba(107, 33, 168, 0.1) !important; }
 [data-theme="light"] .bg-pink-500\/20   { background-color: rgba(157, 23, 77, 0.1) !important; }
@@ -206,7 +207,8 @@ body {
 /* Border tints on badges */
 [data-theme="light"] .border-green-500\/30 { border-color: rgba(22, 101, 52, 0.25) !important; }
 [data-theme="light"] .border-blue-500\/30  { border-color: rgba(29, 78, 216, 0.25) !important; }
-[data-theme="light"] .border-cyan-500\/30  { border-color: rgba(3, 105, 161, 0.25) !important; }
+[data-theme="light"] .border-cyan-500\/40  { border-color: rgba(0, 105, 180, 0.3) !important; }
+[data-theme="light"] .border-cyan-500\/30  { border-color: rgba(0, 105, 180, 0.3) !important; }
 [data-theme="light"] .border-yellow-500\/30 { border-color: rgba(146, 64, 14, 0.25) !important; }
 [data-theme="light"] .border-purple-500\/30 { border-color: rgba(107, 33, 168, 0.25) !important; }
 [data-theme="light"] .border-pink-500\/30  { border-color: rgba(157, 23, 77, 0.25) !important; }

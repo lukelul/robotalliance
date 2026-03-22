@@ -76,7 +76,7 @@ export default function HomePage({ onNavigate }) {
       {/* Hero greeting */}
       <div className="mb-8">
         <p className="text-xs font-semibold tracking-widest uppercase text-blue-300/30 mb-1">Robo Alliance</p>
-        <h1 className="text-2xl font-semibold tracking-tight text-white">
+        <h1 className="text-3xl font-bold text-gray-900" style={{ color: 'var(--text)' }}>
           {isGuest ? 'Welcome to ' : 'Welcome back, '}<span className="text-cyan-400">{isGuest ? 'Robo Alliance' : (profile?.name || currentUser.name)}</span>
         </h1>
         <p className="text-blue-300/40 text-sm mt-1 tracking-wide">The robotics industry, connected.</p>
@@ -86,9 +86,9 @@ export default function HomePage({ onNavigate }) {
         {/* Left column */}
         <div className="lg:col-span-2 flex flex-col gap-6">
           {/* Top News */}
-          <div className="rounded-xl overflow-hidden border border-blue-500/10" style={blkStyle}>
+          <div className="rounded-xl overflow-hidden bg-white border border-gray-100 shadow-sm" style={blkStyle}>
             <div className="px-4 py-3 border-b border-blue-500/10 flex items-center justify-between">
-              <h2 className="text-xs font-semibold tracking-widest uppercase text-blue-300/50">Top News</h2>
+              <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-widest">Top News</h2>
               <span className="text-xs text-blue-300/30 tracking-wide">Robotics Industry</span>
             </div>
             <div className="divide-y divide-blue-500/10">
@@ -117,13 +117,13 @@ export default function HomePage({ onNavigate }) {
           </div>
 
           {/* Top Posts */}
-          <div className="rounded-xl overflow-hidden border border-blue-500/10" style={blkStyle}>
+          <div className="rounded-xl overflow-hidden bg-white border border-gray-100 shadow-sm" style={blkStyle}>
             <div className="px-4 py-3 border-b border-blue-500/10 flex items-center justify-between">
-              <h2 className="text-xs font-semibold tracking-widest uppercase text-blue-300/50">Posts</h2>
+              <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-widest">Posts</h2>
               <div className="flex gap-1">
                 {['newest', 'top', 'hot'].map(s => (
                   <button key={s} onClick={() => setSortTab(s)}
-                    className={`px-2.5 py-1 text-xs rounded transition-colors ${sortTab === s ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'text-blue-300/50 hover:text-white hover:bg-blue-500/10'}`}>
+                    className={`px-3 py-1 text-xs rounded-full font-semibold transition-colors ${sortTab === s ? 'bg-[#0069b4] text-white' : 'text-gray-500 hover:text-gray-900'}`}>
                     {s.charAt(0).toUpperCase() + s.slice(1)}
                   </button>
                 ))}
@@ -132,7 +132,7 @@ export default function HomePage({ onNavigate }) {
             <div className="flex items-center gap-1 px-3 py-2 border-b border-blue-500/10 flex-wrap">
               {[{ id: 'all', name: 'All' }, ...companies.map(c => ({ id: c.id, name: c.name }))].map(tab => (
                 <button key={tab.id} onClick={() => setPostTab(tab.id)}
-                  className={`px-2.5 py-1 text-xs rounded transition-colors ${postTab === tab.id ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'text-blue-300/50 hover:text-white hover:bg-blue-500/10'}`}>
+                  className={`px-2.5 py-1 text-xs rounded-full font-semibold transition-colors ${postTab === tab.id ? 'bg-[#0069b4] text-white' : 'text-gray-500 hover:text-gray-900'}`}>
                   {tab.name}
                 </button>
               ))}
@@ -151,9 +151,9 @@ export default function HomePage({ onNavigate }) {
         {/* Right column: Favs + Events */}
         <div className="flex flex-col gap-6">
           {/* Leadership */}
-          <div className="rounded-xl overflow-hidden border border-blue-500/10" style={blkStyle}>
+          <div className="rounded-xl overflow-hidden bg-white border border-gray-100 shadow-sm" style={blkStyle}>
             <div className="px-4 py-3 border-b border-blue-500/10 flex items-center justify-between">
-              <h2 className="text-xs font-semibold tracking-widest uppercase text-blue-300/50">Leadership</h2>
+              <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-widest">Leadership</h2>
               <button
                 onClick={() => navigate('/leadership')}
                 className="text-xs text-cyan-400/60 hover:text-cyan-300 transition-colors tracking-wide"
@@ -187,9 +187,9 @@ export default function HomePage({ onNavigate }) {
           </div>
 
           {/* Favorited Servers */}
-          <div className="rounded-xl overflow-hidden border border-blue-500/10" style={blkStyle}>
+          <div className="rounded-xl overflow-hidden bg-white border border-gray-100 shadow-sm" style={blkStyle}>
             <div className="px-4 py-3 border-b border-blue-500/10 flex items-center justify-between">
-              <h2 className="text-xs font-semibold tracking-widest uppercase text-blue-300/50">Favorited Servers</h2>
+              <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-widest">Favorited Servers</h2>
             </div>
             <div className="p-2">
               {favCompanies.length === 0 && (
@@ -247,9 +247,9 @@ export default function HomePage({ onNavigate }) {
           </div>
 
           {/* Upcoming Events */}
-          <div className="rounded-xl overflow-hidden border border-blue-500/10" style={blkStyle}>
+          <div className="rounded-xl overflow-hidden bg-white border border-gray-100 shadow-sm" style={blkStyle}>
             <div className="px-4 py-3 border-b border-blue-500/10">
-              <h2 className="text-xs font-semibold tracking-widest uppercase text-blue-300/50">Upcoming Events</h2>
+              <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-widest">Upcoming Events</h2>
             </div>
             <div className="divide-y divide-blue-500/10">
               {events.map(ev => (
