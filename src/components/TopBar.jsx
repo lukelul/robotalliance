@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { companies, people as mockPeople, roleBadgeColors, personTypeColors } from '../data/mockData'
 import Avatar from './Avatar'
 import { useUser } from '../context/UserContext'
@@ -204,5 +204,15 @@ export default function TopBar({ onSearch }) {
         )}
       </div>
     </header>
+    <Link
+      to="/admin"
+      style={{
+        position: 'fixed', bottom: 14, right: 14, zIndex: 999,
+        fontSize: 10, color: 'rgba(255,255,255,0.15)',
+        textDecoration: 'none', letterSpacing: '0.05em',
+      }}
+    >
+      admin
+    </Link>
   )
 }
