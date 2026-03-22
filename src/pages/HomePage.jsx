@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { companies, news, events, roleBadgeColors, currentUser, leadership } from '../data/mockData'
+import { companies, news, events, people as mockPeople, roleBadgeColors, currentUser, leadership } from '../data/mockData'
 import { usePosts } from '../context/PostsContext'
+import { useUser } from '../context/UserContext'
 import PostCard from '../components/PostCard'
 import Avatar from '../components/Avatar'
 
@@ -32,6 +33,13 @@ const blkStyle = { background: 'var(--surface)', backdropFilter: 'blur(14px)' }
 export default function HomePage({ onNavigate }) {
   const navigate = useNavigate()
   const { posts } = usePosts()
+  const { allUsers } = useUser()
+
+  // Merge mockData people with real Firestore users (real users appear first)
+  const people = [
+    ...allUsers,
+    ...mockPeople.filter(mp => !allUsers.some(u => u.name === mp.name)),
+  ]
   const [favs, setFavs] = useState(['boston-dynamics', 'figure-ai'])
   const [postTab, setPostTab] = useState('all')
 

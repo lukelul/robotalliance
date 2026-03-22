@@ -1,6 +1,5 @@
 import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { currentUser, roleBadgeColors } from '../data/mockData'
 import { useTheme } from '../context/ThemeContext'
 import { useUser } from '../context/UserContext'
 import Avatar from '../components/Avatar'
@@ -8,8 +7,22 @@ import Avatar from '../components/Avatar'
 export default function SettingsPage() {
   const navigate = useNavigate()
   const { theme, toggleTheme } = useTheme()
-  const { userPhoto, updatePhoto } = useUser()
+  const { profile, firebaseUser, isGuest, userPhoto, updatePhoto, logout, setShowAuthModal } = useUser()
   const fileInputRef = useRef(null)
+
+  if (isGuest) {
+    return (
+      <div className="page-enter pt-20 pb-24 px-4 max-w-2xl mx-auto relative z-10 flex flex-col items-center justify-center" style={{ minHeight: '60vh' }}>
+        <p className="text-blue-300/50 mb-4">Sign in to access your settings.</p>
+        <button
+          onClick={() => setShowAuthModal(true)}
+          className="px-6 py-2 rounded-lg bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-sm font-medium hover:bg-cyan-500/30 transition-all"
+        >
+          Sign In
+        </button>
+      </div>
+    )
+  }
 
   const panelStyle = {
     background: 'var(--surface)',
@@ -56,8 +69,8 @@ export default function SettingsPage() {
           >
             <Avatar
               photo={userPhoto}
-              avatar={currentUser.avatar}
-              color="linear-gradient(135deg, #00d4ff, #0284c7)"
+              avatar={profile?.avatar}
+              color={profile?.color || 'linear-gradient(135deg, #00d4ff, #0284c7)'}
               size={64}
               rounded="16px"
             />
@@ -72,12 +85,10 @@ export default function SettingsPage() {
           </button>
 
           <div className="flex-1 min-w-0">
-            <div className="text-lg font-semibold text-white leading-tight">{currentUser.name}</div>
-            <div className="text-sm text-blue-300/50 mt-0.5">{currentUser.title}</div>
+            <div className="text-lg font-semibold text-white leading-tight">{profile?.name}</div>
+            <div className="text-sm text-blue-300/50 mt-0.5">{profile?.title || profile?.type}</div>
             <div className="mt-2 flex items-center gap-2">
-              <span className={`text-xs px-2 py-0.5 rounded ${roleBadgeColors[currentUser.role]}`}>
-                {currentUser.role}
-              </span>
+              <span className="text-xs px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300">{profile?.type}</span>
               <button
                 onClick={() => fileInputRef.current?.click()}
                 className="text-xs text-cyan-400/60 hover:text-cyan-300 transition-colors"
@@ -87,7 +98,7 @@ export default function SettingsPage() {
             </div>
           </div>
           <button
-            onClick={() => navigate(`/profile/${currentUser.id}`)}
+            onClick={() => navigate(`/profile/${profile?.id}`)}
             className="px-4 py-2 text-sm rounded-lg border border-blue-500/20 text-blue-300 hover:text-cyan-300 hover:border-cyan-500/30 transition-colors shrink-0"
             style={{ background: 'rgba(14,165,233,0.05)' }}
           >
@@ -145,15 +156,23 @@ export default function SettingsPage() {
         </div>
         <div className="divide-y divide-blue-500/10">
           {[
-            { label: 'Email', value: 'luke@robotalliance.io' },
-            { label: 'Member since', value: 'January 2025' },
-            { label: 'Plan', value: 'Robo Alliance Admin' },
+            { label: 'Email', value: firebaseUser?.email || '—' },
+            { label: 'Member since', value: profile?.createdAt ? new Date(profile.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : '—' },
+            { label: 'School / Org', value: profile?.school || '—' },
           ].map(row => (
             <div key={row.label} className="px-6 py-4 flex items-center justify-between">
               <span className="text-sm text-blue-300/50">{row.label}</span>
               <span className="text-sm text-white">{row.value}</span>
             </div>
           ))}
+          <div className="px-6 py-4">
+            <button
+              onClick={() => { logout(); navigate('/') }}
+              className="text-sm text-red-400/70 hover:text-red-400 transition-colors"
+            >
+              Sign out
+            </button>
+          </div>
         </div>
       </div>
     </div>

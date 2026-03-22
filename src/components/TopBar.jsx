@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { companies, people, currentUser, roleBadgeColors, personTypeColors } from '../data/mockData'
+import { companies, people as mockPeople, roleBadgeColors, personTypeColors } from '../data/mockData'
 import Avatar from './Avatar'
 import { useUser } from '../context/UserContext'
 export default function TopBar({ onSearch }) {
-  const { userPhoto } = useUser()
+  const { profile, isGuest, setShowAuthModal, userPhoto, allUsers } = useUser()
+  const people = [...allUsers, ...mockPeople.filter(mp => !allUsers.some(u => u.name === mp.name))]
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
   const [focused, setFocused] = useState(false)
@@ -182,20 +183,29 @@ export default function TopBar({ onSearch }) {
         </button>
       </div>
 
-      {/* Right: Avatar */}
+      {/* Right: Auth */}
       <div className="flex items-center gap-3 shrink-0">
-        <div className="text-right hidden sm:block">
-          <div className="text-xs text-white font-medium">{currentUser.name}</div>
-          <div className={`text-xs px-1.5 py-0.5 rounded text-center ${roleBadgeColors[currentUser.role]}`}>
-            {currentUser.role}
-          </div>
-        </div>
-        <button
-          onClick={() => navigate('/settings')}
-          className="hover:ring-2 hover:ring-cyan-500/50 transition-all rounded-full overflow-hidden"
-        >
-          <Avatar photo={userPhoto || currentUser.photo} avatar={currentUser.avatar} color="linear-gradient(135deg, #00d4ff, #0284c7)" size={32} />
-        </button>
+        {isGuest ? (
+          <button
+            onClick={() => setShowAuthModal(true)}
+            className="px-4 py-1.5 rounded-lg bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-semibold hover:bg-cyan-500/30 transition-all"
+          >
+            Sign In
+          </button>
+        ) : (
+          <>
+            <div className="text-right hidden sm:block">
+              <div className="text-xs text-white font-medium">{profile?.name || '…'}</div>
+              <div className="text-xs text-blue-300/40">{profile?.type || ''}</div>
+            </div>
+            <button
+              onClick={() => navigate('/settings')}
+              className="hover:ring-2 hover:ring-cyan-500/50 transition-all rounded-full overflow-hidden"
+            >
+              <Avatar photo={userPhoto} avatar={profile?.avatar} color={profile?.color || 'linear-gradient(135deg, #00d4ff, #0284c7)'} size={32} />
+            </button>
+          </>
+        )}
       </div>
     </header>
   )

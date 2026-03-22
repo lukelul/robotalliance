@@ -9,10 +9,22 @@ import ProfilePage from './pages/ProfilePage'
 import EventPage from './pages/EventPage'
 import { PostsProvider } from './context/PostsContext'
 import { ThemeProvider } from './context/ThemeContext'
-import { UserProvider } from './context/UserContext'
+import { UserProvider, useUser } from './context/UserContext'
 import SettingsPage from './pages/SettingsPage'
 import LeadershipPage from './pages/LeadershipPage'
 import LandingPage from './pages/LandingPage'
+import AuthModal from './components/AuthModal'
+import ProfileSetupModal from './components/ProfileSetupModal'
+
+function AuthOverlays() {
+  const { showAuthModal, showProfileSetup } = useUser()
+  return (
+    <>
+      {showAuthModal && <AuthModal />}
+      {showProfileSetup && <ProfileSetupModal />}
+    </>
+  )
+}
 
 function AppInner() {
   const [zoomTarget, setZoomTarget] = useState(null)
@@ -131,6 +143,7 @@ export default function App() {
       <UserProvider>
         <PostsProvider>
           <AppInner />
+          <AuthOverlays />
         </PostsProvider>
       </UserProvider>
     </ThemeProvider>
