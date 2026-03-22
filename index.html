@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <script>
       (function() {
-        var p = new URLSearchParams(window.location.search).get('p');
-        if (p) window.history.replaceState(null, '', '/robotalliance' + p);
+        var p = new URLSearchParams(window.location.search).get('/');
+        if (p) window.history.replaceState(null, '', '/' + p.replace(/~and~/g, '&'));
       })();
     </script>
 

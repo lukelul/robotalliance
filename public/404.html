@@ -3,8 +3,7 @@
   <head>
     <script>
       var l = window.location;
-      var path = l.pathname.slice('/robotalliance'.length) || '/';
-      l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/robotalliance/?p=' + encodeURIComponent(path + l.search + l.hash));
+      l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/?/' + l.pathname.slice(1).replace(/&/g, '~and~') + (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') + l.hash);
     </script>
   </head>
 </html>
