@@ -50,6 +50,7 @@ export function UserProvider({ children }) {
       type: data.type || 'Enthusiast',
       school: data.school || '',
       bio: data.bio || '',
+      linkedin: data.linkedin || '',
       avatar: initials,
       color: data.color || color,
       photo: firebaseUser.photoURL || null,

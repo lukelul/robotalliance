@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { leadership, people } from '../data/mockData'
 import Avatar from '../components/Avatar'
+import { useUser } from '../context/UserContext'
 
 const stats = [
   { value: '340+', label: 'Member Organizations' },
@@ -81,6 +82,7 @@ const pillars = [
 
 export default function LandingPage() {
   const navigate = useNavigate()
+  const { setShowAuthModal } = useUser()
   const [form, setForm] = useState({ name: '', org: '', email: '', role: '' })
   const [submitted, setSubmitted] = useState(false)
   const [logoFailed, setLogoFailed] = useState(false)
@@ -161,12 +163,12 @@ export default function LandingPage() {
           <button onClick={() => navigate('/leadership')}
             className="text-sm text-white/65 hover:text-white transition-colors">Leadership</button>
           <button onClick={() => document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-sm text-white/65 hover:text-white transition-colors">Apply</button>
+            className="text-sm text-white/65 hover:text-white transition-colors">Apply for Premium</button>
         </div>
 
         <div className="flex items-center gap-2">
           <button
-            onClick={enterPlatform}
+            onClick={() => { enterPlatform(); setTimeout(() => setShowAuthModal(true), 540) }}
             className="text-sm text-blue-300/60 hover:text-white transition-colors px-3 py-1.5 hidden sm:block"
           >
             Sign In
@@ -176,7 +178,7 @@ export default function LandingPage() {
             className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:scale-105 hover:shadow-lg"
             style={{ background: 'linear-gradient(135deg, #0ea5e9, #0284c7)', boxShadow: '0 0 16px rgba(14,165,233,0.2)' }}
           >
-            Request Access
+            Apply for Premium
           </button>
         </div>
       </nav>
@@ -188,7 +190,7 @@ export default function LandingPage() {
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium text-cyan-400 mb-8"
             style={{ background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.18)' }}>
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-            Now accepting 2026 Member Applications
+            Now accepting 2026 Premium Applications
           </div>
         </div>
 
@@ -215,11 +217,11 @@ export default function LandingPage() {
 
         <div className="relative fade-up-4 flex flex-col sm:flex-row items-center gap-3 mb-12">
           <button
-            onClick={enterPlatform}
+            onClick={() => { enterPlatform(); setTimeout(() => setShowAuthModal(true), 540) }}
             className="group px-8 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-105 flex items-center gap-2"
             style={{ background: 'linear-gradient(135deg, #0ea5e9, #0284c7)', boxShadow: '0 0 28px rgba(14,165,233,0.28)' }}
           >
-            Enter Platform
+            Join Free
             <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
@@ -229,7 +231,7 @@ export default function LandingPage() {
             className="px-8 py-3.5 rounded-xl text-sm font-semibold text-blue-300 transition-all hover:text-white hover:border-cyan-500/40"
             style={{ border: '1px solid rgba(14,165,233,0.2)', background: 'rgba(14,165,233,0.04)' }}
           >
-            Request Access
+            Apply for Premium
           </button>
         </div>
 
@@ -459,10 +461,10 @@ export default function LandingPage() {
               </div>
             ) : (
               <>
-                <p className="text-xs font-bold tracking-widest uppercase text-white/50 mb-2">Membership</p>
-                <h2 className="text-2xl font-black text-white mb-2 tracking-tight">Request Access</h2>
+                <p className="text-xs font-bold tracking-widest uppercase text-white/50 mb-2">Premium Membership</p>
+                <h2 className="text-2xl font-black text-white mb-2 tracking-tight">Apply for Premium</h2>
                 <p className="text-sm text-white/65 mb-8 leading-relaxed">
-                  Membership is by invitation or verified application. Tell us about yourself.
+                  Free accounts are open to everyone. Premium membership unlocks exclusive access to investor relations, private channels, and standards committees. Apply below.
                 </p>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

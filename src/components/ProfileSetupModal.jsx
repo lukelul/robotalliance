@@ -10,13 +10,14 @@ export default function ProfileSetupModal() {
   const [school, setSchool] = useState('')
   const [bio, setBio] = useState('')
   const [title, setTitle] = useState('')
+  const [linkedin, setLinkedin] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!name.trim()) return
     setLoading(true)
-    await saveProfile({ name: name.trim(), type, school: school.trim(), bio: bio.trim(), title: title.trim() })
+    await saveProfile({ name: name.trim(), type, school: school.trim(), bio: bio.trim(), title: title.trim(), linkedin: linkedin.trim() })
     setLoading(false)
   }
 
@@ -93,6 +94,16 @@ export default function ProfileSetupModal() {
               placeholder="Tell the community about yourself…"
               rows={3}
               className="w-full px-3 py-2.5 rounded-lg border border-blue-500/30 bg-white/10 text-sm text-white placeholder-blue-300/50 outline-none focus:border-cyan-500/50 transition-colors resize-none"
+            />
+          </div>
+
+          <div>
+            <label className="modal-label text-xs text-blue-300/70 mb-1 block">LinkedIn URL</label>
+            <input
+              value={linkedin}
+              onChange={e => setLinkedin(e.target.value)}
+              placeholder="https://linkedin.com/in/yourname"
+              className="modal-input w-full px-3 py-2.5 rounded-lg border border-blue-500/30 text-sm placeholder-blue-300/50 outline-none focus:border-cyan-500/50 transition-colors"
             />
           </div>
 
