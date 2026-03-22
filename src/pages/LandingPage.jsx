@@ -167,24 +167,7 @@ export default function LandingPage() {
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 h-20"
         style={{ background: navBg, borderBottom: `1px solid ${navBorder}` }}>
 
-        <div className="flex items-center gap-2">
-          {!logoFailed ? (
-            <div style={{ overflow: 'hidden', width: '180px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img
-                src="/logo.png"
-                alt="Robo Alliance"
-                style={{ height: '52px', width: 'auto', transform: 'scale(2.5)', mixBlendMode: isDark ? 'screen' : 'multiply', filter: 'brightness(1.1)' }}
-                onError={() => setLogoFailed(true)}
-              />
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold text-white shrink-0"
-                style={{ background: 'linear-gradient(135deg, #06b6d4, #0284c7)' }}>RA</div>
-              <span className="font-semibold tracking-tight text-sm hidden sm:block" style={{ color: textPrimary }}>Robo Alliance</span>
-            </div>
-          )}
-        </div>
+        <div className="flex items-center gap-2" />
 
         <div className="hidden md:flex items-center gap-6">
           <button onClick={() => navigate('/leadership')}
@@ -220,9 +203,45 @@ export default function LandingPage() {
       </nav>
 
       {/* ── Hero ──────────────────────────────────────────────────────── */}
-      <section className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center pt-16 pb-16 px-4">
+      <section className="relative z-10 min-h-screen flex flex-col items-start justify-end text-left pt-16 pb-[22vh] px-8 sm:px-16">
 
-        <div className="relative fade-up-1">
+        {/* ── Node network graphic ─────────────────────────────────── */}
+        <div className="absolute top-20 right-0 w-[55%] h-[60%] pointer-events-none opacity-60 fade-up-1" style={{ zIndex: 0 }}>
+          <svg width="100%" height="100%" viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="edgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#06b6d4" />
+                <stop offset="100%" stopColor="#6366f1" />
+              </linearGradient>
+            </defs>
+
+            {/* Edges */}
+            {[
+              [180,60, 400,140], [400,140, 580,50],
+              [180,60, 280,250], [400,140, 520,280],
+              [580,50, 650,200], [280,250, 520,280],
+              [520,280, 650,200], [280,250, 160,400],
+              [520,280, 440,420], [160,400, 440,420],
+              [650,200, 580,50],
+            ].map(([x1,y1,x2,y2], i) => (
+              <line key={`e${i}`} x1={x1} y1={y1} x2={x2} y2={y2}
+                stroke="url(#edgeGrad)" strokeWidth="1.5" opacity="0.45">
+                <animate attributeName="opacity" values="0.25;0.55;0.25" dur={`${4 + (i % 3)}s`} repeatCount="indefinite" />
+              </line>
+            ))}
+
+            {/* Nodes */}
+            {[
+              [180,60],[400,140],[580,50],
+              [280,250],[520,280],[650,200],
+              [360,400],[640,420],
+            ].map(([x,y], i) => (
+              <circle key={`n${i}`} cx={x} cy={y} r={8} fill="#06b6d4" />
+            ))}
+          </svg>
+        </div>
+
+        <div className="relative fade-up-1" style={{ zIndex: 1 }}>
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium text-cyan-500 mb-8"
             style={{ background: isDark ? 'rgba(6,182,212,0.08)' : 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.25)' }}>
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
@@ -231,8 +250,10 @@ export default function LandingPage() {
         </div>
 
         <div className="relative fade-up-2">
-          <h1 className="text-5xl sm:text-7xl font-black tracking-tight leading-[1.05] mb-6 max-w-4xl" style={{ color: textPrimary }}>
-            The global alliance<br />
+          <h1 className="text-5xl sm:text-7xl font-black tracking-tight leading-[1.05] mb-6 max-w-4xl relative">
+            <span style={{ color: 'rgba(100,100,100,0.9)' }}>
+              <span style={{ background: 'rgba(60,60,60,0.15)', padding: '2px 6px', borderRadius: '0' }}>The global alliance</span>
+            </span><br />
             <span style={{
               background: 'linear-gradient(90deg, #0ea5e9 0%, #0284c7 40%, #6366f1 100%)',
               WebkitBackgroundClip: 'text',
@@ -244,13 +265,13 @@ export default function LandingPage() {
         </div>
 
         <div className="relative fade-up-3">
-          <p className="text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10" style={{ color: textMuted }}>
+          <p className="text-lg sm:text-xl max-w-2xl leading-relaxed mb-10" style={{ color: textMuted }}>
             Robo Alliance connects the world's leading robotics companies, researchers, and
             investors in a trusted network built for coordination, capital, and collective progress.
           </p>
         </div>
 
-        <div className="relative fade-up-4 flex flex-col sm:flex-row items-center gap-3 mb-12">
+        <div className="relative fade-up-4 flex flex-col sm:flex-row items-start gap-3 mb-12">
           <button
             onClick={() => isGuest ? (enterPlatform(), setTimeout(() => setShowAuthModal(true), 540)) : enterPlatform()}
             className="group px-8 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-105 flex items-center gap-2"
