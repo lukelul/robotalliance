@@ -7,16 +7,17 @@ import Avatar from '../components/Avatar'
 import { useUser } from '../context/UserContext'
 
 export default function ProfilePage() {
-  const { userPhoto } = useUser()
+  const { userPhoto, allUsers, firebaseUser } = useUser()
   const { id } = useParams()
   const navigate = useNavigate()
   const { posts } = usePosts()
   const [tab, setTab] = useState('posts')
 
-  const isMe = id === 'luke-lu' || id === currentUser.id
+  const isMe = id === 'luke-lu' || id === currentUser.id || id === firebaseUser?.uid
+  const firebasePerson = allUsers.find(u => u.id === id)
   const person = isMe
-    ? { ...currentUser, type: 'Robotics Engineer', school: 'Robo Alliance', bio: "Building the robotics industry's home on the internet.", followers: 3300, online: true }
-    : people.find(p => p.id === id)
+    ? (firebasePerson || { ...currentUser, type: 'Robotics Engineer', school: 'Robo Alliance', bio: "Building the robotics industry's home on the internet.", followers: 3300, online: true })
+    : (firebasePerson || people.find(p => p.id === id))
 
   if (!person) return (
     <div className="flex items-center justify-center h-screen text-blue-300/50">
