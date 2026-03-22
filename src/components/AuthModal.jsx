@@ -42,6 +42,7 @@ export default function AuthModal() {
       await signInWithPopup(auth, googleProvider)
       close()
     } catch (err) {
+      console.error('Google sign-in error:', err.code, err.message)
       setError(friendlyError(err.code))
     } finally {
       setLoading(false)

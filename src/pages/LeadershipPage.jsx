@@ -33,61 +33,24 @@ export default function LeadershipPage() {
           {leadership.map((person, i) => (
             <div
               key={person.id}
-              className="rounded-xl border border-blue-500/10 hover:border-blue-500/25 transition-all overflow-hidden group"
-              style={blkStyle}
+              className="rounded-xl border border-blue-500/10 hover:border-blue-500/25 transition-all overflow-hidden group relative"
+              style={{ ...blkStyle, height: '360px' }}
             >
-              {/* Color accent bar */}
-              <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${person.color}, transparent)` }} />
+              {/* Large photo */}
+              <div className="absolute inset-0" style={{
+                backgroundImage: `url(${person.photo})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center top',
+                backgroundColor: person.color,
+              }} />
+              {/* Gradient overlay for text readability */}
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 40%, transparent 70%)' }} />
 
-              <div className="p-5">
-                {/* Avatar + name */}
-                <div className="flex items-start gap-4 mb-4">
-                  <Avatar
-                    photo={person.photo}
-                    avatar={person.avatar}
-                    color={person.color}
-                    size={56}
-                    style={{ boxShadow: `0 4px 20px ${person.color}30` }}
-                  />
-                  <div className="flex-1 min-w-0 pt-0.5">
-                    <h3 className="text-base font-semibold text-white leading-tight">{person.name}</h3>
-                    <p className="text-xs text-blue-300/50 mt-0.5 leading-snug">{person.title}</p>
-                    <p className="text-xs text-blue-300/50 mt-1 leading-snug">{person.background}</p>
-                  </div>
-                  {/* Region badge */}
-                  <span className="text-xs text-blue-300/50 border border-blue-500/15 rounded px-2 py-0.5 shrink-0 hidden sm:block">
-                    {person.region}
-                  </span>
-                </div>
-
-                {/* Bio */}
-                <p className="text-sm text-blue-100/70 leading-relaxed mb-4">{person.bio}</p>
-
-                {/* Expertise */}
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {person.expertise.map(tag => (
-                    <span
-                      key={tag}
-                      className="text-xs px-2 py-0.5 rounded-full border border-blue-500/15 text-blue-300/50"
-                      style={{ background: 'var(--input-bg)' }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Initiatives */}
-                <div className="border-t border-blue-500/08 pt-3">
-                  <p className="text-xs text-blue-300/25 uppercase tracking-widest mb-2">Initiatives</p>
-                  <div className="flex flex-col gap-1">
-                    {person.initiatives.map(init => (
-                      <div key={init} className="flex items-center gap-2">
-                        <div className="w-1 h-1 rounded-full shrink-0" style={{ background: person.color }} />
-                        <span className="text-xs text-blue-300/60">{init}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+              {/* Text overlay — bottom left */}
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <h3 className="text-lg font-semibold text-white leading-tight">{person.name}</h3>
+                <p className="text-sm text-white/60 mt-1">{person.title}</p>
+                <p className="text-xs text-white/40 mt-1">{person.background}</p>
               </div>
             </div>
           ))}
