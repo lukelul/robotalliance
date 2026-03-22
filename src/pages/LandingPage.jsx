@@ -5,6 +5,17 @@ import Avatar from '../components/Avatar'
 import { useUser } from '../context/UserContext'
 import { useTheme } from '../context/ThemeContext'
 
+const partners = [
+  { name: 'Boston Dynamics', category: 'Robotics Hardware', initials: 'BD', color: '#0ea5e9' },
+  { name: 'ABB Robotics', category: 'Industrial Automation', initials: 'ABB', color: '#ef4444' },
+  { name: 'NVIDIA', category: 'AI & Compute', initials: 'NV', color: '#76b900' },
+  { name: 'Softbank Robotics', category: 'Service Robotics', initials: 'SB', color: '#6366f1' },
+  { name: 'Teradyne', category: 'Collaborative Robots', initials: 'TR', color: '#f59e0b' },
+  { name: 'Fanuc', category: 'Industrial Robotics', initials: 'FA', color: '#f97316' },
+  { name: 'iRobot', category: 'Consumer Robotics', initials: 'IR', color: '#10b981' },
+  { name: 'Agility Robotics', category: 'Humanoid Robots', initials: 'AR', color: '#8b5cf6' },
+]
+
 const stats = [
   { value: '340+', label: 'Member Organizations' },
   { value: '$8.2B', label: 'Collective Funding' },
@@ -295,6 +306,65 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Leadership Preview ────────────────────────────────────────── */}
+      <section className="relative z-10 px-4 pb-24 max-w-5xl mx-auto">
+        <div className="flex items-end justify-between mb-8">
+          <div>
+            <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: textFaint }}>Leadership</p>
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: textPrimary }}>Who's building the alliance</h2>
+          </div>
+          <button
+            onClick={() => navigate('/leadership')}
+            className="text-sm text-cyan-500/70 hover:text-cyan-500 transition-colors hidden sm:block"
+          >
+            View all →
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {leadership.slice(0, 4).map(person => (
+            <div key={person.id} className="rounded-2xl p-5 group cursor-default transition-all duration-300 hover:border-cyan-500/20"
+              style={cardStyle}>
+              <Avatar photo={person.photo} avatar={person.avatar} color={person.color} size={48} rounded="12px" />
+              <div className="mt-4">
+                <div className="text-sm font-bold group-hover:text-cyan-500 transition-colors" style={{ color: textPrimary }}>{person.name}</div>
+                <div className="text-xs mt-0.5 leading-snug" style={{ color: textMuted }}>{person.title}</div>
+                <div className="text-xs mt-2 font-medium text-cyan-500/70">{person.org}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-6 sm:hidden">
+          <button onClick={() => navigate('/leadership')} className="text-sm text-cyan-500/70 hover:text-cyan-500 transition-colors">
+            View all leadership →
+          </button>
+        </div>
+      </section>
+
+      {/* ── Key Supporters & Ecosystem Partners ───────────────────────── */}
+      <section className="relative z-10 px-4 pb-24 max-w-5xl mx-auto">
+        <div className="text-center mb-10">
+          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: textFaint }}>Ecosystem</p>
+          <h2 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: textPrimary }}>Key Supporters & Partners</h2>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {partners.map(p => (
+            <div key={p.name} className="rounded-2xl p-5 flex flex-col items-center text-center gap-3 group cursor-default transition-all duration-300"
+              style={cardStyle}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center text-white text-xs font-bold shrink-0"
+                style={{ background: p.color }}>
+                {p.initials}
+              </div>
+              <div>
+                <div className="text-sm font-semibold group-hover:text-cyan-500 transition-colors" style={{ color: textPrimary }}>{p.name}</div>
+                <div className="text-xs mt-0.5" style={{ color: textMuted }}>{p.category}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ── Mission ───────────────────────────────────────────────────── */}
       <section className="relative z-10 px-4 pb-24 max-w-5xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -416,42 +486,6 @@ export default function LandingPage() {
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ── Leadership Preview ────────────────────────────────────────── */}
-      <section className="relative z-10 px-4 pb-24 max-w-5xl mx-auto">
-        <div className="flex items-end justify-between mb-8">
-          <div>
-            <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: textFaint }}>Leadership</p>
-            <h2 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: textPrimary }}>Who's building the alliance</h2>
-          </div>
-          <button
-            onClick={() => navigate('/leadership')}
-            className="text-sm text-cyan-500/70 hover:text-cyan-500 transition-colors hidden sm:block"
-          >
-            View all →
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {leadership.slice(0, 4).map(person => (
-            <div key={person.id} className="rounded-2xl p-5 group cursor-default transition-all duration-300 hover:border-cyan-500/20"
-              style={cardStyle}>
-              <Avatar photo={person.photo} avatar={person.avatar} color={person.color} size={48} rounded="12px" />
-              <div className="mt-4">
-                <div className="text-sm font-bold group-hover:text-cyan-500 transition-colors" style={{ color: textPrimary }}>{person.name}</div>
-                <div className="text-xs mt-0.5 leading-snug" style={{ color: textMuted }}>{person.title}</div>
-                <div className="text-xs mt-2 font-medium text-cyan-500/70">{person.org}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="text-center mt-6 sm:hidden">
-          <button onClick={() => navigate('/leadership')} className="text-sm text-cyan-500/70 hover:text-cyan-500 transition-colors">
-            View all leadership →
-          </button>
         </div>
       </section>
 
