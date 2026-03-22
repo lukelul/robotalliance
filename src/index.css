@@ -242,6 +242,31 @@ body {
   box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
 }
 
+/* Auth / profile modals */
+.modal-panel {
+  background: rgba(4, 13, 26, 0.97);
+}
+[data-theme="light"] .modal-panel {
+  background: #f0f6ff;
+}
+.modal-input {
+  background: rgba(255,255,255,0.08);
+  color: #ffffff;
+}
+[data-theme="light"] .modal-input {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: rgba(14, 100, 200, 0.3) !important;
+}
+[data-theme="light"] .modal-input::placeholder {
+  color: rgba(51, 65, 85, 0.5);
+}
+[data-theme="light"] .modal-title { color: #0f172a; }
+[data-theme="light"] .modal-tab-inactive { color: rgba(51, 65, 85, 0.6); }
+[data-theme="light"] .modal-tab-inactive:hover { color: #0f172a; }
+[data-theme="light"] .modal-label { color: rgba(51, 65, 85, 0.8); }
+[data-theme="light"] .modal-subtitle { color: rgba(51, 65, 85, 0.7); }
+
 @keyframes pulse-slow {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }

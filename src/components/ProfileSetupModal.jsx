@@ -26,28 +26,27 @@ export default function ProfileSetupModal() {
       style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }}
     >
       <div
-        className="w-full max-w-md rounded-2xl border border-blue-500/20 p-6"
-        style={{ background: 'rgba(4,13,26,0.97)' }}
+        className="modal-panel w-full max-w-md rounded-2xl border border-blue-500/20 p-6"
       >
         <div className="mb-6">
-          <h2 className="text-lg font-semibold text-white">Set up your profile</h2>
-          <p className="text-xs text-blue-300/70 mt-1">You'll appear in the Robo Alliance network once you're set up.</p>
+          <h2 className="modal-title text-lg font-semibold text-white">Set up your profile</h2>
+          <p className="modal-subtitle text-xs text-blue-300/70 mt-1">You'll appear in the Robo Alliance network once you're set up.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="text-xs text-blue-300/70 mb-1 block">Full Name *</label>
+            <label className="modal-label text-xs text-blue-300/70 mb-1 block">Full Name *</label>
             <input
               value={name}
               onChange={e => setName(e.target.value)}
               required
               placeholder="Your name"
-              className="w-full px-3 py-2.5 rounded-lg border border-blue-500/30 bg-white/10 text-sm text-white placeholder-blue-300/50 outline-none focus:border-cyan-500/50 transition-colors"
+              className="modal-input w-full px-3 py-2.5 rounded-lg border border-blue-500/30 text-sm placeholder-blue-300/50 outline-none focus:border-cyan-500/50 transition-colors"
             />
           </div>
 
           <div>
-            <label className="text-xs text-blue-300/70 mb-1 block">I am a…</label>
+            <label className="modal-label text-xs text-blue-300/70 mb-1 block">I am a…</label>
             <div className="flex flex-wrap gap-2">
               {TYPES.map(t => (
                 <button
@@ -67,27 +66,27 @@ export default function ProfileSetupModal() {
           </div>
 
           <div>
-            <label className="text-xs text-blue-300/70 mb-1 block">School / Organization</label>
+            <label className="modal-label text-xs text-blue-300/70 mb-1 block">School / Organization</label>
             <input
               value={school}
               onChange={e => setSchool(e.target.value)}
               placeholder="e.g. MIT, Boston Dynamics, Independent"
-              className="w-full px-3 py-2.5 rounded-lg border border-blue-500/30 bg-white/10 text-sm text-white placeholder-blue-300/50 outline-none focus:border-cyan-500/50 transition-colors"
+              className="modal-input w-full px-3 py-2.5 rounded-lg border border-blue-500/30 text-sm placeholder-blue-300/50 outline-none focus:border-cyan-500/50 transition-colors"
             />
           </div>
 
           <div>
-            <label className="text-xs text-blue-300/70 mb-1 block">Title / Role</label>
+            <label className="modal-label text-xs text-blue-300/70 mb-1 block">Title / Role</label>
             <input
               value={title}
               onChange={e => setTitle(e.target.value)}
               placeholder="e.g. Robotics Engineer, PhD Candidate"
-              className="w-full px-3 py-2.5 rounded-lg border border-blue-500/30 bg-white/10 text-sm text-white placeholder-blue-300/50 outline-none focus:border-cyan-500/50 transition-colors"
+              className="modal-input w-full px-3 py-2.5 rounded-lg border border-blue-500/30 text-sm placeholder-blue-300/50 outline-none focus:border-cyan-500/50 transition-colors"
             />
           </div>
 
           <div>
-            <label className="text-xs text-blue-300/70 mb-1 block">Bio</label>
+            <label className="modal-label text-xs text-blue-300/70 mb-1 block">Bio</label>
             <textarea
               value={bio}
               onChange={e => setBio(e.target.value)}

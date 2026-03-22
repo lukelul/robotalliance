@@ -55,26 +55,25 @@ export default function AuthModal() {
       onClick={close}
     >
       <div
-        className="w-full max-w-sm rounded-2xl border border-blue-500/20 p-6"
-        style={{ background: 'rgba(4,13,26,0.97)' }}
+        className="modal-panel w-full max-w-sm rounded-2xl border border-blue-500/20 p-6"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-lg font-semibold text-white">
+          <h2 className="modal-title text-lg font-semibold text-white">
             {tab === 'signin' ? 'Sign in to Robo Alliance' : 'Create your account'}
           </h2>
           <button onClick={close} className="text-blue-300/40 hover:text-white transition-colors text-xl leading-none">×</button>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-5 p-1 rounded-lg" style={{ background: 'rgba(255,255,255,0.05)' }}>
+        <div className="flex gap-1 mb-5 p-1 rounded-lg bg-white/5">
           {['signin', 'signup'].map(t => (
             <button
               key={t}
               onClick={() => { setTab(t); setError('') }}
               className={`flex-1 py-1.5 rounded-md text-sm font-medium transition-all ${
-                tab === t ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'text-blue-300/40 hover:text-white'
+                tab === t ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'modal-tab-inactive text-blue-300/40 hover:text-white'
               }`}
             >
               {t === 'signin' ? 'Sign In' : 'Sign Up'}
@@ -111,7 +110,7 @@ export default function AuthModal() {
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
-            className="w-full px-3 py-2.5 rounded-lg border border-blue-500/20 bg-white/5 text-sm text-white placeholder-blue-300/30 outline-none focus:border-cyan-500/50 transition-colors"
+            className="modal-input w-full px-3 py-2.5 rounded-lg border border-blue-500/20 text-sm placeholder-blue-300/30 outline-none focus:border-cyan-500/50 transition-colors"
           />
           <input
             type="password"
@@ -119,7 +118,7 @@ export default function AuthModal() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
-            className="w-full px-3 py-2.5 rounded-lg border border-blue-500/20 bg-white/5 text-sm text-white placeholder-blue-300/30 outline-none focus:border-cyan-500/50 transition-colors"
+            className="modal-input w-full px-3 py-2.5 rounded-lg border border-blue-500/20 text-sm placeholder-blue-300/30 outline-none focus:border-cyan-500/50 transition-colors"
           />
           {error && <p className="text-xs text-red-400">{error}</p>}
           <button
