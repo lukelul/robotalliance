@@ -108,7 +108,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="landing-page min-h-screen text-white relative overflow-x-hidden">
+    <div className="landing-page min-h-screen text-white relative overflow-x-hidden" style={{ background: '#020814' }}>
 
       {/* ── Portal transition overlay ─────────────────────────────────── */}
       {transitioning && (
