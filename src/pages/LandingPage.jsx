@@ -344,13 +344,20 @@ export default function LandingPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {leadership.slice(0, 4).map(person => (
-            <div key={person.id} className="rounded-2xl p-5 group cursor-default transition-all duration-300 hover:border-cyan-500/20"
-              style={cardStyle}>
-              <Avatar photo={person.photo} avatar={person.avatar} color={person.color} size={48} rounded="12px" />
-              <div className="mt-4">
-                <div className="text-sm font-bold group-hover:text-cyan-500 transition-colors" style={{ color: textPrimary }}>{person.name}</div>
-                <div className="text-xs mt-0.5 leading-snug" style={{ color: textMuted }}>{person.title}</div>
-                <div className="text-xs mt-2 font-medium text-cyan-500/70">{person.org}</div>
+            <div key={person.id} className="rounded-2xl overflow-hidden group cursor-default transition-all duration-300 hover:scale-[1.02]"
+              style={{ position: 'relative', aspectRatio: '3/4', border: '1px solid rgba(14,165,233,0.12)' }}>
+              {/* Full-bleed photo or gradient fallback */}
+              {person.photo
+                ? <img src={person.photo} alt={person.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                : <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, ${person.color}cc, ${person.color}44)` }} />
+              }
+              {/* Gradient overlay for text legibility */}
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.05) 100%)' }} />
+              {/* Text overlay */}
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 16px' }}>
+                <div className="text-sm font-bold text-white leading-tight">{person.name}</div>
+                <div className="text-xs mt-1 leading-snug text-white/70">{person.title}</div>
+                <div className="text-xs mt-1.5 font-medium text-cyan-400">{person.org}</div>
               </div>
             </div>
           ))}
