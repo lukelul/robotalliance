@@ -60,27 +60,10 @@ export default function TopBar({ onSearch }) {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 h-14 glass border-b border-blue-500/10 flex items-center px-4 gap-4">
       {/* Logo */}
-      <button onClick={() => navigate('/')} className="flex items-center gap-2 shrink-0 group">
-        {!logoFailed ? (
-          <div style={{ background: '#060f1e', borderRadius: '10px', overflow: 'hidden', width: '148px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img
-              src="/logo.png"
-              alt="Robo Alliance"
-              className="group-hover:opacity-90 transition-opacity"
-              style={{ height: '40px', width: 'auto', transform: 'scale(2.5)', mixBlendMode: 'screen', filter: 'brightness(1.1)' }}
-              onError={() => setLogoFailed(true)}
-            />
-          </div>
-        ) : (
-          <>
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-cyan-500/30">
-              RA
-            </div>
-            <span className="font-bold text-white text-sm tracking-wider hidden sm:block group-hover:text-cyan-400 transition-colors">
-              ROBO ALLIANCE
-            </span>
-          </>
-        )}
+      <button onClick={() => navigate('/')} className="shrink-0 group">
+        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-cyan-500/30 group-hover:opacity-90 transition-opacity">
+          RA
+        </div>
       </button>
 
       {/* Search */}
