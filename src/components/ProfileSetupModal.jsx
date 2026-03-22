@@ -31,23 +31,23 @@ export default function ProfileSetupModal() {
       >
         <div className="mb-6">
           <h2 className="text-lg font-semibold text-white">Set up your profile</h2>
-          <p className="text-xs text-blue-300/40 mt-1">You'll appear in the Robo Alliance network once you're set up.</p>
+          <p className="text-xs text-blue-300/70 mt-1">You'll appear in the Robo Alliance network once you're set up.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="text-xs text-blue-300/50 mb-1 block">Full Name *</label>
+            <label className="text-xs text-blue-300/70 mb-1 block">Full Name *</label>
             <input
               value={name}
               onChange={e => setName(e.target.value)}
               required
               placeholder="Your name"
-              className="w-full px-3 py-2.5 rounded-lg border border-blue-500/20 bg-white/5 text-sm text-white placeholder-blue-300/30 outline-none focus:border-cyan-500/50 transition-colors"
+              className="w-full px-3 py-2.5 rounded-lg border border-blue-500/30 bg-white/10 text-sm text-white placeholder-blue-300/50 outline-none focus:border-cyan-500/50 transition-colors"
             />
           </div>
 
           <div>
-            <label className="text-xs text-blue-300/50 mb-1 block">I am a…</label>
+            <label className="text-xs text-blue-300/70 mb-1 block">I am a…</label>
             <div className="flex flex-wrap gap-2">
               {TYPES.map(t => (
                 <button
@@ -67,33 +67,33 @@ export default function ProfileSetupModal() {
           </div>
 
           <div>
-            <label className="text-xs text-blue-300/50 mb-1 block">School / Organization</label>
+            <label className="text-xs text-blue-300/70 mb-1 block">School / Organization</label>
             <input
               value={school}
               onChange={e => setSchool(e.target.value)}
               placeholder="e.g. MIT, Boston Dynamics, Independent"
-              className="w-full px-3 py-2.5 rounded-lg border border-blue-500/20 bg-white/5 text-sm text-white placeholder-blue-300/30 outline-none focus:border-cyan-500/50 transition-colors"
+              className="w-full px-3 py-2.5 rounded-lg border border-blue-500/30 bg-white/10 text-sm text-white placeholder-blue-300/50 outline-none focus:border-cyan-500/50 transition-colors"
             />
           </div>
 
           <div>
-            <label className="text-xs text-blue-300/50 mb-1 block">Title / Role</label>
+            <label className="text-xs text-blue-300/70 mb-1 block">Title / Role</label>
             <input
               value={title}
               onChange={e => setTitle(e.target.value)}
               placeholder="e.g. Robotics Engineer, PhD Candidate"
-              className="w-full px-3 py-2.5 rounded-lg border border-blue-500/20 bg-white/5 text-sm text-white placeholder-blue-300/30 outline-none focus:border-cyan-500/50 transition-colors"
+              className="w-full px-3 py-2.5 rounded-lg border border-blue-500/30 bg-white/10 text-sm text-white placeholder-blue-300/50 outline-none focus:border-cyan-500/50 transition-colors"
             />
           </div>
 
           <div>
-            <label className="text-xs text-blue-300/50 mb-1 block">Bio</label>
+            <label className="text-xs text-blue-300/70 mb-1 block">Bio</label>
             <textarea
               value={bio}
               onChange={e => setBio(e.target.value)}
               placeholder="Tell the community about yourself…"
               rows={3}
-              className="w-full px-3 py-2.5 rounded-lg border border-blue-500/20 bg-white/5 text-sm text-white placeholder-blue-300/30 outline-none focus:border-cyan-500/50 transition-colors resize-none"
+              className="w-full px-3 py-2.5 rounded-lg border border-blue-500/30 bg-white/10 text-sm text-white placeholder-blue-300/50 outline-none focus:border-cyan-500/50 transition-colors resize-none"
             />
           </div>
 
