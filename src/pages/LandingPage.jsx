@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { leadership, people } from '../data/mockData'
+import { leadership, people, keySupporters } from '../data/mockData'
 import Avatar from '../components/Avatar'
 import { useUser } from '../context/UserContext'
 import { useTheme } from '../context/ThemeContext'
@@ -250,15 +250,7 @@ export default function LandingPage() {
           </svg>
         </div>
 
-        <div className="relative fade-up-1" style={{ zIndex: 1 }}>
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium text-cyan-500 mb-8"
-            style={{ background: isDark ? 'rgba(6,182,212,0.08)' : 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.25)' }}>
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-            Now accepting 2026 Premium Applications
-          </div>
-        </div>
-
-        <div className="relative fade-up-2">
+        <div className="relative fade-up-2 mt-12">
           <h1 className="text-5xl sm:text-7xl font-black tracking-tight leading-[1.05] mb-6 max-w-4xl relative">
             <span style={{ color: 'rgba(100,100,100,0.9)' }}>
               <span style={{ background: 'rgba(60,60,60,0.15)', padding: '2px 6px', borderRadius: '0' }}>The global alliance</span>
@@ -278,6 +270,14 @@ export default function LandingPage() {
             Robo Alliance connects the world's leading robotics companies, researchers, and
             investors in a trusted network built for coordination, capital, and collective progress.
           </p>
+        </div>
+
+        <div className="relative fade-up-3" style={{ zIndex: 1 }}>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium text-cyan-500 mb-8"
+            style={{ background: isDark ? 'rgba(6,182,212,0.08)' : 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.25)' }}>
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+            Now accepting 2026 Premium Applications
+          </div>
         </div>
 
         <div className="relative fade-up-4 flex flex-col sm:flex-row items-start gap-3 mb-12">
@@ -379,24 +379,24 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Key Supporters (people) ────────────────────────────────────── */}
-      <section className="relative z-10 px-4 pb-16 max-w-5xl mx-auto">
-        <div className="mb-8">
-          <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: textFaint }}>Key Supporters</p>
-          <h2 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: textPrimary }}>Backed by industry leaders</h2>
+      {/* ── Key Supporters ────────────────────────────────────────────── */}
+      <section className="relative z-10 px-4 pb-24 max-w-5xl mx-auto">
+        <div className="flex items-end justify-between mb-8">
+          <div>
+            <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: textFaint }}>Supporters</p>
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: textPrimary }}>Key Supporters</h2>
+          </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {keySupport.map(p => (
-            <div key={p.name} className="rounded-2xl p-4 flex flex-col items-center text-center gap-3 group cursor-default transition-all duration-300"
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {keySupporters.map(person => (
+            <div key={person.id} className="rounded-2xl p-5 group cursor-default transition-all duration-300 hover:border-cyan-500/20"
               style={cardStyle}>
-              <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
-                style={{ background: p.color }}>
-                {p.initials}
-              </div>
-              <div>
-                <div className="text-xs font-bold" style={{ color: textPrimary }}>{p.name}</div>
-                <div className="text-xs mt-0.5" style={{ color: textMuted }}>{p.role}</div>
-                <div className="text-xs mt-0.5 font-medium text-cyan-500/70">{p.org}</div>
+              <Avatar photo={person.photo} avatar={person.avatar} color={person.color} size={48} rounded="12px" />
+              <div className="mt-4">
+                <div className="text-sm font-bold group-hover:text-cyan-500 transition-colors" style={{ color: textPrimary }}>{person.name}</div>
+                <div className="text-xs mt-0.5 leading-snug" style={{ color: textMuted }}>{person.title}</div>
+                <div className="text-xs mt-2 font-medium text-cyan-500/70">{person.background}</div>
               </div>
             </div>
           ))}

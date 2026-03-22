@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { leadership, advisors } from '../data/mockData'
+import { leadership, advisors, keySupporters } from '../data/mockData'
 import Avatar from '../components/Avatar'
 
 const blkStyle = { background: 'var(--surface)', backdropFilter: 'blur(14px)' }
@@ -48,6 +48,37 @@ export default function LeadershipPage() {
               <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 40%, transparent 70%)' }} />
 
               {/* Text overlay — bottom left */}
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <h3 className="text-lg font-semibold text-white leading-tight">{person.name}</h3>
+                <p className="text-sm text-white/60 mt-1">{person.title}</p>
+                <p className="text-xs text-white/40 mt-1">{person.background}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Key Supporters */}
+      <section className="mb-14">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xs font-semibold tracking-widest uppercase text-blue-300/40">Key Supporters</h2>
+          <span className="text-xs text-blue-300/25 tracking-wide">{keySupporters.length} Members</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {keySupporters.map((person) => (
+            <div
+              key={person.id}
+              className="rounded-xl border border-blue-500/10 hover:border-blue-500/25 transition-all overflow-hidden group relative"
+              style={{ ...blkStyle, height: '360px' }}
+            >
+              <div className="absolute inset-0" style={{
+                backgroundImage: `url(${person.photo})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center top',
+                backgroundColor: person.color,
+              }} />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 40%, transparent 70%)' }} />
               <div className="absolute bottom-0 left-0 right-0 p-5">
                 <h3 className="text-lg font-semibold text-white leading-tight">{person.name}</h3>
                 <p className="text-sm text-white/60 mt-1">{person.title}</p>

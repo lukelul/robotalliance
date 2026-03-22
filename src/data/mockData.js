@@ -99,6 +99,46 @@ export const leadership = [
   },
 ]
 
+// ─── Key Supporters ──────────────────────────────────────────────────────────
+export const keySupporters = [
+  {
+    id: 'supporter-1',
+    name: 'Elena Vasquez',
+    title: 'Strategic Partner',
+    avatar: 'EV',
+    color: '#0ea5e9',
+    photo: 'https://i.pravatar.cc/300?img=47',
+    background: 'Managing Partner, Frontier Capital · MIT Media Lab',
+  },
+  {
+    id: 'supporter-2',
+    name: 'James Okafor',
+    title: 'Innovation Sponsor',
+    avatar: 'JO',
+    color: '#10b981',
+    photo: 'https://i.pravatar.cc/300?img=51',
+    background: 'CEO, Nexus Robotics · Former SVP, Boston Dynamics',
+  },
+  {
+    id: 'supporter-3',
+    name: 'Yuki Tanaka',
+    title: 'Research Patron',
+    avatar: 'YT',
+    color: '#f59e0b',
+    photo: 'https://i.pravatar.cc/300?img=49',
+    background: 'Director of Robotics, SoftBank Group · University of Tokyo',
+  },
+  {
+    id: 'supporter-4',
+    name: 'Priya Sharma',
+    title: 'Community Champion',
+    avatar: 'PS',
+    color: '#7c3aed',
+    photo: 'https://i.pravatar.cc/300?img=45',
+    background: 'Founder, RoboWomen Foundation · Former PM, ABB Robotics',
+  },
+]
+
 // ─── Robo Alliance Board of Advisors ────────────────────────────────────────
 export const advisors = [
   {
