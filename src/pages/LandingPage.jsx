@@ -82,7 +82,7 @@ const pillars = [
 
 export default function LandingPage() {
   const navigate = useNavigate()
-  const { setShowAuthModal } = useUser()
+  const { setShowAuthModal, isGuest } = useUser()
   const [form, setForm] = useState({ name: '', org: '', email: '', role: '' })
   const [submitted, setSubmitted] = useState(false)
   const [logoFailed, setLogoFailed] = useState(false)
@@ -167,12 +167,21 @@ export default function LandingPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={() => { enterPlatform(); setTimeout(() => setShowAuthModal(true), 540) }}
-            className="text-sm text-blue-300/60 hover:text-white transition-colors px-3 py-1.5 hidden sm:block"
-          >
-            Sign In
-          </button>
+          {isGuest ? (
+            <button
+              onClick={() => { enterPlatform(); setTimeout(() => setShowAuthModal(true), 540) }}
+              className="text-sm text-blue-300/60 hover:text-white transition-colors px-3 py-1.5 hidden sm:block"
+            >
+              Sign In
+            </button>
+          ) : (
+            <button
+              onClick={enterPlatform}
+              className="text-sm text-blue-300/60 hover:text-white transition-colors px-3 py-1.5 hidden sm:block"
+            >
+              Enter Platform
+            </button>
+          )}
           <button
             onClick={() => document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth' })}
             className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:scale-105 hover:shadow-lg"
@@ -217,11 +226,11 @@ export default function LandingPage() {
 
         <div className="relative fade-up-4 flex flex-col sm:flex-row items-center gap-3 mb-12">
           <button
-            onClick={() => { enterPlatform(); setTimeout(() => setShowAuthModal(true), 540) }}
+            onClick={() => isGuest ? (enterPlatform(), setTimeout(() => setShowAuthModal(true), 540)) : enterPlatform()}
             className="group px-8 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-105 flex items-center gap-2"
             style={{ background: 'linear-gradient(135deg, #0ea5e9, #0284c7)', boxShadow: '0 0 28px rgba(14,165,233,0.28)' }}
           >
-            Sign up — it's free
+            {isGuest ? "Sign up — it's free" : 'Enter Platform'}
             <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
@@ -466,14 +475,16 @@ export default function LandingPage() {
                 <p className="text-sm text-white/65 mb-5 leading-relaxed">
                   Premium membership unlocks exclusive investor relations, private channels, and standards committees. Free accounts are open to everyone — no application needed.
                 </p>
-                <button
-                  type="button"
-                  onClick={() => { enterPlatform(); setTimeout(() => setShowAuthModal(true), 540) }}
-                  className="w-full mb-6 py-2.5 rounded-xl text-sm font-semibold text-white/70 hover:text-white transition-all"
-                  style={{ background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.18)' }}
-                >
-                  Just want a free account? Sign up here →
-                </button>
+                {isGuest && (
+                  <button
+                    type="button"
+                    onClick={() => { enterPlatform(); setTimeout(() => setShowAuthModal(true), 540) }}
+                    className="w-full mb-6 py-2.5 rounded-xl text-sm font-semibold text-white/70 hover:text-white transition-all"
+                    style={{ background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.18)' }}
+                  >
+                    Just want a free account? Sign up here →
+                  </button>
+                )}
                 <div className="flex items-center gap-3 mb-6">
                   <div className="flex-1 h-px" style={{ background: 'rgba(14,165,233,0.12)' }} />
                   <span className="text-xs text-white/30">or apply for premium below</span>
