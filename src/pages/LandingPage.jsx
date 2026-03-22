@@ -348,7 +348,7 @@ export default function LandingPage() {
               style={{ position: 'relative', aspectRatio: '3/4', border: '1px solid rgba(14,165,233,0.12)' }}>
               {/* Full-bleed photo or gradient fallback */}
               {person.photo
-                ? <img src={person.photo} alt={person.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                ? <img src={person.photo} alt={person.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center top', background: person.color + '22' }} />
                 : <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(135deg, ${person.color}cc, ${person.color}44)` }} />
               }
               {/* Gradient overlay for text legibility */}

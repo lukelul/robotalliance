@@ -39,9 +39,10 @@ export default function LeadershipPage() {
               {/* Large photo */}
               <div className="absolute inset-0" style={{
                 backgroundImage: `url(${person.photo})`,
-                backgroundSize: 'cover',
+                backgroundSize: 'contain',
                 backgroundPosition: 'center top',
-                backgroundColor: person.color,
+                backgroundRepeat: 'no-repeat',
+                backgroundColor: person.color + '22',
               }} />
               {/* Gradient overlay for text readability */}
               <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 40%, transparent 70%)' }} />
