@@ -16,6 +16,15 @@ const partners = [
   { name: 'Agility Robotics', category: 'Humanoid Robots', initials: 'AR', color: '#8b5cf6' },
 ]
 
+const keySupport = [
+  { name: 'Marc Raibert', role: 'Founder', org: 'Boston Dynamics', initials: 'MR', color: '#0ea5e9' },
+  { name: 'Jensen Huang', role: 'CEO', org: 'NVIDIA', initials: 'JH', color: '#76b900' },
+  { name: 'Gill Pratt', role: 'Chief Scientist', org: 'Toyota Research Institute', initials: 'GP', color: '#f59e0b' },
+  { name: 'Pieter Abbeel', role: 'Co-Founder', org: 'Covariant AI', initials: 'PA', color: '#8b5cf6' },
+  { name: 'Brett Adcock', role: 'CEO & Founder', org: 'Figure AI', initials: 'BA', color: '#ef4444' },
+  { name: 'Helen Greiner', role: 'Co-Founder', org: 'iRobot', initials: 'HG', color: '#10b981' },
+]
+
 const stats = [
   { value: '340+', label: 'Member Organizations' },
   { value: '$8.2B', label: 'Collective Funding' },
@@ -370,11 +379,35 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Key Supporters & Ecosystem Partners ───────────────────────── */}
+      {/* ── Key Supporters (people) ────────────────────────────────────── */}
+      <section className="relative z-10 px-4 pb-16 max-w-5xl mx-auto">
+        <div className="mb-8">
+          <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: textFaint }}>Key Supporters</p>
+          <h2 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: textPrimary }}>Backed by industry leaders</h2>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {keySupport.map(p => (
+            <div key={p.name} className="rounded-2xl p-4 flex flex-col items-center text-center gap-3 group cursor-default transition-all duration-300"
+              style={cardStyle}>
+              <div className="w-12 h-12 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
+                style={{ background: p.color }}>
+                {p.initials}
+              </div>
+              <div>
+                <div className="text-xs font-bold" style={{ color: textPrimary }}>{p.name}</div>
+                <div className="text-xs mt-0.5" style={{ color: textMuted }}>{p.role}</div>
+                <div className="text-xs mt-0.5 font-medium text-cyan-500/70">{p.org}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Ecosystem Partners (companies) ────────────────────────────── */}
       <section className="relative z-10 px-4 pb-24 max-w-5xl mx-auto">
-        <div className="text-center mb-10">
-          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: textFaint }}>Ecosystem</p>
-          <h2 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: textPrimary }}>Key Supporters & Partners</h2>
+        <div className="mb-8">
+          <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: textFaint }}>Ecosystem Partners</p>
+          <h2 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: textPrimary }}>Organizations shaping the field</h2>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {partners.map(p => (
