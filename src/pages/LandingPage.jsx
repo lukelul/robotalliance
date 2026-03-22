@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { leadership, people } from '../data/mockData'
 import Avatar from '../components/Avatar'
 import { useUser } from '../context/UserContext'
+import { useTheme } from '../context/ThemeContext'
 
 const stats = [
   { value: '340+', label: 'Member Organizations' },
@@ -83,6 +84,8 @@ const pillars = [
 export default function LandingPage() {
   const navigate = useNavigate()
   const { setShowAuthModal, isGuest } = useUser()
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
   const [form, setForm] = useState({ name: '', org: '', email: '', role: '' })
   const [submitted, setSubmitted] = useState(false)
   const [logoFailed, setLogoFailed] = useState(false)
@@ -102,19 +105,30 @@ export default function LandingPage() {
   // preview people: mix of leadership + community members
   const previewAvatars = [...leadership.slice(0, 3), ...people.slice(0, 3)]
 
-  const cardStyle = {
-    background: 'rgba(4, 13, 26, 0.22)',
-    border: '1px solid rgba(14,165,233,0.12)',
-  }
+  const bg = isDark ? '#020814' : '#ffffff'
+  const navBg = isDark ? '#060f1e' : '#ffffff'
+  const navBorder = isDark ? 'rgba(14,165,233,0.08)' : 'rgba(0,0,0,0.08)'
+  const cardBg = isDark ? 'rgba(4, 13, 26, 0.22)' : 'rgba(0,105,180,0.03)'
+  const cardBorder = isDark ? '1px solid rgba(14,165,233,0.12)' : '1px solid rgba(0,0,0,0.08)'
+  const cardStyle = { background: cardBg, border: cardBorder }
+  const textPrimary = isDark ? '#ffffff' : '#0f172a'
+  const textMuted = isDark ? 'rgba(255,255,255,0.65)' : 'rgba(15,23,42,0.6)'
+  const textFaint = isDark ? 'rgba(255,255,255,0.45)' : 'rgba(15,23,42,0.4)'
+  const inputBg = isDark ? 'rgba(14,165,233,0.05)' : 'rgba(0,0,0,0.03)'
+  const inputBorder = isDark ? 'rgba(14,165,233,0.15)' : 'rgba(0,0,0,0.12)'
+  const inputText = isDark ? '#ffffff' : '#0f172a'
+  const optionBg = isDark ? '#040d1a' : '#ffffff'
+  const footerBg = isDark ? 'rgba(2,8,20,0.6)' : 'rgba(248,250,252,0.9)'
+  const footerBorder = isDark ? 'rgba(14,165,233,0.08)' : 'rgba(0,0,0,0.08)'
 
   return (
-    <div className="landing-page min-h-screen text-white relative overflow-x-hidden" style={{ background: '#020814' }}>
+    <div className="landing-page min-h-screen relative overflow-x-hidden" style={{ background: bg, color: textPrimary }}>
 
       {/* ── Portal transition overlay ─────────────────────────────────── */}
       {transitioning && (
         <div
           className="fixed inset-0 z-[200] portal-overlay flex items-center justify-center"
-          style={{ background: '#020814' }}
+          style={{ background: bg }}
         >
           <div className="flex flex-col items-center gap-4">
             <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
@@ -123,22 +137,24 @@ export default function LandingPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <span className="text-sm text-blue-300/60 tracking-wider">Entering platform…</span>
+            <span className="text-sm tracking-wider" style={{ color: textMuted }}>Entering platform…</span>
           </div>
         </div>
       )}
 
       {/* ── Background glow orbs ──────────────────────────────────────── */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
-        <div className="glow-drift absolute rounded-full"
-          style={{ width: 600, height: 600, top: '-10%', left: '30%', background: 'radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)' }} />
-        <div className="glow-drift absolute rounded-full"
-          style={{ width: 500, height: 500, top: '40%', right: '-10%', background: 'radial-gradient(circle, rgba(129,140,248,0.05) 0%, transparent 70%)', animationDelay: '-5s' }} />
-      </div>
+      {isDark && (
+        <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+          <div className="glow-drift absolute rounded-full"
+            style={{ width: 600, height: 600, top: '-10%', left: '30%', background: 'radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)' }} />
+          <div className="glow-drift absolute rounded-full"
+            style={{ width: 500, height: 500, top: '40%', right: '-10%', background: 'radial-gradient(circle, rgba(129,140,248,0.05) 0%, transparent 70%)', animationDelay: '-5s' }} />
+        </div>
+      )}
 
       {/* ── Nav ───────────────────────────────────────────────────────── */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 h-20"
-        style={{ background: '#060f1e', borderBottom: '1px solid rgba(14,165,233,0.08)' }}>
+        style={{ background: navBg, borderBottom: `1px solid ${navBorder}` }}>
 
         <div className="flex items-center gap-2">
           {!logoFailed ? (
@@ -146,7 +162,7 @@ export default function LandingPage() {
               <img
                 src="/logo.png"
                 alt="Robo Alliance"
-                style={{ height: '52px', width: 'auto', transform: 'scale(2.5)', mixBlendMode: 'screen', filter: 'brightness(1.1)' }}
+                style={{ height: '52px', width: 'auto', transform: 'scale(2.5)', mixBlendMode: isDark ? 'screen' : 'multiply', filter: 'brightness(1.1)' }}
                 onError={() => setLogoFailed(true)}
               />
             </div>
@@ -154,30 +170,30 @@ export default function LandingPage() {
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold text-white shrink-0"
                 style={{ background: 'linear-gradient(135deg, #06b6d4, #0284c7)' }}>RA</div>
-              <span className="font-semibold tracking-tight text-white text-sm hidden sm:block">Robo Alliance</span>
+              <span className="font-semibold tracking-tight text-sm hidden sm:block" style={{ color: textPrimary }}>Robo Alliance</span>
             </div>
           )}
         </div>
 
         <div className="hidden md:flex items-center gap-6">
           <button onClick={() => navigate('/leadership')}
-            className="text-sm text-white/65 hover:text-white transition-colors">Leadership</button>
+            className="text-sm transition-colors hover:text-cyan-500" style={{ color: textMuted }}>Leadership</button>
           <button onClick={() => document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-sm text-white/65 hover:text-white transition-colors">Request Premium Access</button>
+            className="text-sm transition-colors hover:text-cyan-500" style={{ color: textMuted }}>Request Premium Access</button>
         </div>
 
         <div className="flex items-center gap-2">
           {isGuest ? (
             <button
               onClick={() => { enterPlatform(); setTimeout(() => setShowAuthModal(true), 540) }}
-              className="text-sm text-blue-300/60 hover:text-white transition-colors px-3 py-1.5 hidden sm:block"
+              className="text-sm transition-colors px-3 py-1.5 hidden sm:block hover:text-cyan-500" style={{ color: textMuted }}
             >
               Sign In
             </button>
           ) : (
             <button
               onClick={enterPlatform}
-              className="text-sm text-blue-300/60 hover:text-white transition-colors px-3 py-1.5 hidden sm:block"
+              className="text-sm transition-colors px-3 py-1.5 hidden sm:block hover:text-cyan-500" style={{ color: textMuted }}
             >
               Enter Platform
             </button>
@@ -196,18 +212,18 @@ export default function LandingPage() {
       <section className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center pt-16 pb-16 px-4">
 
         <div className="relative fade-up-1">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium text-cyan-400 mb-8"
-            style={{ background: 'rgba(6,182,212,0.08)', border: '1px solid rgba(6,182,212,0.18)' }}>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium text-cyan-500 mb-8"
+            style={{ background: isDark ? 'rgba(6,182,212,0.08)' : 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.25)' }}>
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
             Now accepting 2026 Premium Applications
           </div>
         </div>
 
         <div className="relative fade-up-2">
-          <h1 className="text-5xl sm:text-7xl font-black tracking-tight leading-[1.05] mb-6 max-w-4xl">
-            <span style={{ textShadow: '0 2px 24px rgba(2,8,20,0.7)' }}>The global alliance</span><br />
+          <h1 className="text-5xl sm:text-7xl font-black tracking-tight leading-[1.05] mb-6 max-w-4xl" style={{ color: textPrimary }}>
+            The global alliance<br />
             <span style={{
-              background: 'linear-gradient(90deg, #67e8f9 0%, #38bdf8 40%, #818cf8 100%)',
+              background: 'linear-gradient(90deg, #0ea5e9 0%, #0284c7 40%, #6366f1 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}>
@@ -217,8 +233,7 @@ export default function LandingPage() {
         </div>
 
         <div className="relative fade-up-3">
-          <p className="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed mb-10"
-            style={{ textShadow: '0 1px 12px rgba(2,8,20,0.5)' }}>
+          <p className="text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10" style={{ color: textMuted }}>
             Robo Alliance connects the world's leading robotics companies, researchers, and
             investors in a trusted network built for coordination, capital, and collective progress.
           </p>
@@ -237,8 +252,8 @@ export default function LandingPage() {
           </button>
           <button
             onClick={() => document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth' })}
-            className="px-8 py-3.5 rounded-xl text-sm font-semibold text-blue-300 transition-all hover:text-white hover:border-cyan-500/40"
-            style={{ border: '1px solid rgba(14,165,233,0.2)', background: 'rgba(14,165,233,0.04)' }}
+            className="px-8 py-3.5 rounded-xl text-sm font-semibold transition-all hover:border-cyan-500/40"
+            style={{ border: `1px solid ${isDark ? 'rgba(14,165,233,0.2)' : 'rgba(0,105,180,0.2)'}`, background: isDark ? 'rgba(14,165,233,0.04)' : 'rgba(0,105,180,0.04)', color: isDark ? '#7dd3fc' : '#0069b4' }}
           >
             Request Premium Access
           </button>
@@ -248,20 +263,20 @@ export default function LandingPage() {
         <div className="relative fade-up-4 flex items-center gap-3">
           <div className="flex -space-x-2.5">
             {previewAvatars.map((p, i) => (
-              <div key={p.id} className="rounded-full ring-2 shrink-0" style={{ ringColor: '#020814', zIndex: previewAvatars.length - i }}>
+              <div key={p.id} className="rounded-full ring-2 shrink-0" style={{ zIndex: previewAvatars.length - i }}>
                 <Avatar photo={p.photo} avatar={p.avatar} color={p.color} size={30} />
               </div>
             ))}
           </div>
-          <div className="text-sm text-white/65">
-            <span className="text-white font-semibold">340+</span> organizations worldwide
+          <div className="text-sm" style={{ color: textMuted }}>
+            <span className="font-semibold" style={{ color: textPrimary }}>340+</span> organizations worldwide
           </div>
         </div>
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-30">
-          <span className="text-xs text-blue-300/60 tracking-widest uppercase">Scroll</span>
-          <svg className="w-4 h-4 text-blue-400 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <span className="text-xs tracking-widest uppercase" style={{ color: textMuted }}>Scroll</span>
+          <svg className="w-4 h-4 text-cyan-400 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </div>
@@ -269,11 +284,12 @@ export default function LandingPage() {
 
       {/* ── Stats ─────────────────────────────────────────────────────── */}
       <section className="relative z-10 px-4 pb-20 max-w-5xl mx-auto">
-        <div className="rounded-2xl grid grid-cols-2 sm:grid-cols-4 divide-x divide-blue-500/10" style={cardStyle}>
+        <div className="rounded-2xl grid grid-cols-2 sm:grid-cols-4" style={{ ...cardStyle, borderCollapse: 'collapse' }}>
           {stats.map((s, i) => (
-            <div key={s.label} className={`py-8 px-6 text-center ${i === 0 ? 'rounded-l-2xl' : ''} ${i === stats.length - 1 ? 'rounded-r-2xl' : ''}`}>
-              <div className="text-3xl sm:text-4xl font-black text-cyan-400 mb-1.5 tabular-nums">{s.value}</div>
-              <div className="text-xs text-white/60 font-medium tracking-wide">{s.label}</div>
+            <div key={s.label} className={`py-8 px-6 text-center ${i < stats.length - 1 ? 'border-r' : ''}`}
+              style={{ borderColor: isDark ? 'rgba(14,165,233,0.1)' : 'rgba(0,0,0,0.07)' }}>
+              <div className="text-3xl sm:text-4xl font-black text-cyan-500 mb-1.5 tabular-nums">{s.value}</div>
+              <div className="text-xs font-medium tracking-wide" style={{ color: textMuted }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -286,12 +302,12 @@ export default function LandingPage() {
           <div className="rounded-2xl p-8 sm:p-10 flex flex-col justify-between" style={cardStyle}>
             <div>
               <p className="text-xs font-bold tracking-widest uppercase text-cyan-500/70 mb-5">Our Mission</p>
-              <blockquote className="text-2xl sm:text-3xl font-bold text-white leading-tight mb-6">
+              <blockquote className="text-2xl sm:text-3xl font-bold leading-tight mb-6" style={{ color: textPrimary }}>
                 "Coordination infrastructure for the age of intelligent machines."
               </blockquote>
             </div>
-            <div className="pt-6 border-t border-blue-500/10">
-              <p className="text-sm text-white/70 leading-relaxed">
+            <div className="pt-6" style={{ borderTop: `1px solid ${isDark ? 'rgba(14,165,233,0.1)' : 'rgba(0,0,0,0.08)'}` }}>
+              <p className="text-sm leading-relaxed" style={{ color: textMuted }}>
                 Robotics is moving from research labs into every layer of the physical economy.
                 Yet the industry remains fragmented — competing standards, siloed data, misaligned
                 incentives. Robo Alliance is the neutral convening body for this moment.
@@ -302,9 +318,8 @@ export default function LandingPage() {
           {/* Right — platform preview card */}
           <div className="rounded-2xl overflow-hidden relative" style={{ ...cardStyle, minHeight: 280 }}>
             <div className="absolute inset-0 p-6 flex flex-col gap-3">
-              <div className="text-xs font-bold tracking-widest uppercase text-white/50 mb-1">Inside the Platform</div>
+              <div className="text-xs font-bold tracking-widest uppercase mb-1" style={{ color: textFaint }}>Inside the Platform</div>
 
-              {/* Mini channel list preview */}
               {[
                 { name: 'Standards & Policy', msg: 'New ISO 10218 draft published', time: '2m', color: '#818cf8' },
                 { name: 'Investment Rounds', msg: 'Series B closed — $47M', time: '15m', color: '#34d399' },
@@ -312,19 +327,19 @@ export default function LandingPage() {
                 { name: 'Global Events', msg: 'ICRA 2026 registration open', time: '3h', color: '#f472b6' },
               ].map(ch => (
                 <div key={ch.name} className="flex items-center gap-3 px-3 py-2.5 rounded-lg"
-                  style={{ background: 'rgba(14,165,233,0.04)', border: '1px solid rgba(14,165,233,0.07)' }}>
+                  style={{ background: isDark ? 'rgba(14,165,233,0.04)' : 'rgba(0,105,180,0.04)', border: `1px solid ${isDark ? 'rgba(14,165,233,0.07)' : 'rgba(0,105,180,0.08)'}` }}>
                   <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: ch.color }} />
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs font-semibold text-white/80 truncate">{ch.name}</div>
-                    <div className="text-xs text-white/55 truncate">{ch.msg}</div>
+                    <div className="text-xs font-semibold truncate" style={{ color: textPrimary }}>{ch.name}</div>
+                    <div className="text-xs truncate" style={{ color: textMuted }}>{ch.msg}</div>
                   </div>
-                  <div className="text-xs text-white/45 shrink-0">{ch.time}</div>
+                  <div className="text-xs shrink-0" style={{ color: textFaint }}>{ch.time}</div>
                 </div>
               ))}
 
               <button
                 onClick={enterPlatform}
-                className="mt-auto w-full py-2.5 rounded-lg text-xs font-semibold text-cyan-400 transition-all hover:bg-cyan-500/10"
+                className="mt-auto w-full py-2.5 rounded-lg text-xs font-semibold text-cyan-500 transition-all hover:bg-cyan-500/10"
                 style={{ border: '1px solid rgba(6,182,212,0.2)' }}
               >
                 Enter Platform →
@@ -337,13 +352,12 @@ export default function LandingPage() {
       {/* ── Feature Bento ─────────────────────────────────────────────── */}
       <section className="relative z-10 px-4 pb-24 max-w-5xl mx-auto">
         <div className="text-center mb-12">
-          <p className="text-xs font-bold tracking-widest uppercase text-white/50 mb-3">What We Offer</p>
-          <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">Built for the robotics ecosystem</h2>
+          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: textFaint }}>What We Offer</p>
+          <h2 className="text-3xl sm:text-4xl font-black tracking-tight" style={{ color: textPrimary }}>Built for the robotics ecosystem</h2>
         </div>
 
-        {/* Bento grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
-          {/* Large card — spans 2 cols on lg */}
+          {/* Large card */}
           <div
             className="lg:col-span-2 rounded-2xl p-7 group cursor-default relative overflow-hidden transition-all duration-300 hover:border-cyan-500/25"
             style={{ ...cardStyle, borderColor: `rgba(6,182,212,0.15)` }}
@@ -354,20 +368,20 @@ export default function LandingPage() {
               style={{ background: `rgba(6,182,212,0.12)`, border: `1px solid rgba(6,182,212,0.2)`, color: pillars[0].accent }}>
               {pillars[0].icon}
             </div>
-            <h3 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">{pillars[0].title}</h3>
-            <p className="text-sm text-white/65 leading-relaxed">{pillars[0].desc}</p>
+            <h3 className="text-lg font-bold mb-2 group-hover:text-cyan-500 transition-colors" style={{ color: textPrimary }}>{pillars[0].title}</h3>
+            <p className="text-sm leading-relaxed" style={{ color: textMuted }}>{pillars[0].desc}</p>
           </div>
 
           {/* Right tall card */}
           {pillars.slice(1, 2).map(p => (
-            <div key={p.title} className="rounded-2xl p-6 group cursor-default relative overflow-hidden transition-all duration-300 hover:border-opacity-30"
+            <div key={p.title} className="rounded-2xl p-6 group cursor-default relative overflow-hidden transition-all duration-300"
               style={{ ...cardStyle }}>
               <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
                 style={{ background: `rgba(129,140,248,0.1)`, border: `1px solid rgba(129,140,248,0.2)`, color: p.accent }}>
                 {p.icon}
               </div>
-              <h3 className="text-sm font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">{p.title}</h3>
-              <p className="text-xs text-white/65 leading-relaxed">{p.desc}</p>
+              <h3 className="text-sm font-bold mb-2 group-hover:text-cyan-500 transition-colors" style={{ color: textPrimary }}>{p.title}</h3>
+              <p className="text-xs leading-relaxed" style={{ color: textMuted }}>{p.desc}</p>
             </div>
           ))}
 
@@ -379,12 +393,12 @@ export default function LandingPage() {
                 style={{ background: `rgba(52,211,153,0.08)`, border: `1px solid rgba(52,211,153,0.15)`, color: p.accent }}>
                 {p.icon}
               </div>
-              <h3 className="text-sm font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">{p.title}</h3>
-              <p className="text-xs text-white/65 leading-relaxed">{p.desc}</p>
+              <h3 className="text-sm font-bold mb-2 group-hover:text-cyan-500 transition-colors" style={{ color: textPrimary }}>{p.title}</h3>
+              <p className="text-xs leading-relaxed" style={{ color: textMuted }}>{p.desc}</p>
             </div>
           ))}
 
-          {/* Wide card — spans full width on lg */}
+          {/* Wide card */}
           <div className="lg:col-span-3 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5 group cursor-default"
             style={{ ...cardStyle, borderColor: 'rgba(6,182,212,0.12)' }}>
             <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
@@ -392,13 +406,13 @@ export default function LandingPage() {
               {pillars[5].icon}
             </div>
             <div className="flex-1">
-              <h3 className="text-sm font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors">{pillars[5].title}</h3>
-              <p className="text-xs text-white/65 leading-relaxed">{pillars[5].desc}</p>
+              <h3 className="text-sm font-bold mb-1 group-hover:text-cyan-500 transition-colors" style={{ color: textPrimary }}>{pillars[5].title}</h3>
+              <p className="text-xs leading-relaxed" style={{ color: textMuted }}>{pillars[5].desc}</p>
             </div>
-            <div className="flex gap-3 text-xs text-white/55 shrink-0 flex-wrap">
+            <div className="flex gap-3 text-xs shrink-0 flex-wrap" style={{ color: textFaint }}>
               {['🇺🇸 USA', '🇩🇪 Germany', '🇯🇵 Japan', '🇸🇬 Singapore', '🇬🇧 UK', '+42 more'].map(r => (
                 <span key={r} className="px-2.5 py-1 rounded-full"
-                  style={{ background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.1)' }}>{r}</span>
+                  style={{ background: isDark ? 'rgba(14,165,233,0.06)' : 'rgba(0,105,180,0.05)', border: `1px solid ${isDark ? 'rgba(14,165,233,0.1)' : 'rgba(0,105,180,0.1)'}` }}>{r}</span>
               ))}
             </div>
           </div>
@@ -409,12 +423,12 @@ export default function LandingPage() {
       <section className="relative z-10 px-4 pb-24 max-w-5xl mx-auto">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <p className="text-xs font-bold tracking-widest uppercase text-white/50 mb-2">Leadership</p>
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">Who's building the alliance</h2>
+            <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: textFaint }}>Leadership</p>
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight" style={{ color: textPrimary }}>Who's building the alliance</h2>
           </div>
           <button
             onClick={() => navigate('/leadership')}
-            className="text-sm text-cyan-400/70 hover:text-cyan-300 transition-colors hidden sm:block"
+            className="text-sm text-cyan-500/70 hover:text-cyan-500 transition-colors hidden sm:block"
           >
             View all →
           </button>
@@ -426,16 +440,16 @@ export default function LandingPage() {
               style={cardStyle}>
               <Avatar photo={person.photo} avatar={person.avatar} color={person.color} size={48} rounded="12px" />
               <div className="mt-4">
-                <div className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">{person.name}</div>
-                <div className="text-xs text-white/65 mt-0.5 leading-snug">{person.title}</div>
-                <div className="text-xs text-cyan-400/60 mt-2 font-medium">{person.org}</div>
+                <div className="text-sm font-bold group-hover:text-cyan-500 transition-colors" style={{ color: textPrimary }}>{person.name}</div>
+                <div className="text-xs mt-0.5 leading-snug" style={{ color: textMuted }}>{person.title}</div>
+                <div className="text-xs mt-2 font-medium text-cyan-500/70">{person.org}</div>
               </div>
             </div>
           ))}
         </div>
 
         <div className="text-center mt-6 sm:hidden">
-          <button onClick={() => navigate('/leadership')} className="text-sm text-cyan-400/70 hover:text-cyan-300 transition-colors">
+          <button onClick={() => navigate('/leadership')} className="text-sm text-cyan-500/70 hover:text-cyan-500 transition-colors">
             View all leadership →
           </button>
         </div>
@@ -444,7 +458,6 @@ export default function LandingPage() {
       {/* ── Apply ─────────────────────────────────────────────────────── */}
       <section id="apply" className="relative z-10 px-4 pb-28 max-w-xl mx-auto">
         <div className="rounded-2xl overflow-hidden" style={cardStyle}>
-          {/* Top accent bar */}
           <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #06b6d4, #818cf8, #06b6d4)' }} />
 
           <div className="p-8 sm:p-10">
@@ -452,12 +465,12 @@ export default function LandingPage() {
               <div className="text-center py-8">
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5"
                   style={{ background: 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.2)' }}>
-                  <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-8 h-8 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Application received</h3>
-                <p className="text-sm text-white/65 mb-8 leading-relaxed">
+                <h3 className="text-xl font-bold mb-2" style={{ color: textPrimary }}>Application received</h3>
+                <p className="text-sm mb-8 leading-relaxed" style={{ color: textMuted }}>
                   We'll review your application and reach out within 3–5 business days.
                 </p>
                 <button
@@ -470,83 +483,83 @@ export default function LandingPage() {
               </div>
             ) : (
               <>
-                <p className="text-xs font-bold tracking-widest uppercase text-white/50 mb-2">Premium Membership</p>
-                <h2 className="text-2xl font-black text-white mb-2 tracking-tight">Request Premium Access</h2>
-                <p className="text-sm text-white/65 mb-5 leading-relaxed">
+                <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: textFaint }}>Premium Membership</p>
+                <h2 className="text-2xl font-black mb-2 tracking-tight" style={{ color: textPrimary }}>Request Premium Access</h2>
+                <p className="text-sm mb-5 leading-relaxed" style={{ color: textMuted }}>
                   Premium membership unlocks exclusive investor relations, private channels, and standards committees. Free accounts are open to everyone — no application needed.
                 </p>
                 {isGuest && (
                   <button
                     type="button"
                     onClick={() => { enterPlatform(); setTimeout(() => setShowAuthModal(true), 540) }}
-                    className="w-full mb-6 py-2.5 rounded-xl text-sm font-semibold text-white/70 hover:text-white transition-all"
-                    style={{ background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.18)' }}
+                    className="w-full mb-6 py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-80"
+                    style={{ background: isDark ? 'rgba(14,165,233,0.06)' : 'rgba(0,105,180,0.06)', border: `1px solid ${isDark ? 'rgba(14,165,233,0.18)' : 'rgba(0,105,180,0.18)'}`, color: isDark ? 'rgba(255,255,255,0.7)' : '#0069b4' }}
                   >
                     Just want a free account? Sign up here →
                   </button>
                 )}
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="flex-1 h-px" style={{ background: 'rgba(14,165,233,0.12)' }} />
-                  <span className="text-xs text-white/30">or apply for premium below</span>
-                  <div className="flex-1 h-px" style={{ background: 'rgba(14,165,233,0.12)' }} />
+                  <div className="flex-1 h-px" style={{ background: isDark ? 'rgba(14,165,233,0.12)' : 'rgba(0,0,0,0.08)' }} />
+                  <span className="text-xs" style={{ color: textFaint }}>or apply for premium below</span>
+                  <div className="flex-1 h-px" style={{ background: isDark ? 'rgba(14,165,233,0.12)' : 'rgba(0,0,0,0.08)' }} />
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-white/60 mb-2">Full Name *</label>
+                      <label className="block text-xs font-semibold mb-2" style={{ color: textMuted }}>Full Name *</label>
                       <input
                         value={form.name}
                         onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                         placeholder="Jane Smith"
                         required
-                        className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-blue-300/25 outline-none transition-all"
-                        style={{ background: 'rgba(14,165,233,0.05)', border: '1px solid rgba(14,165,233,0.15)' }}
+                        className="w-full rounded-xl px-4 py-3 text-sm placeholder-blue-300/25 outline-none transition-all"
+                        style={{ background: inputBg, border: `1px solid ${inputBorder}`, color: inputText }}
                         onFocus={e => e.target.style.borderColor = 'rgba(6,182,212,0.45)'}
-                        onBlur={e => e.target.style.borderColor = 'rgba(14,165,233,0.15)'}
+                        onBlur={e => e.target.style.borderColor = inputBorder}
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-white/60 mb-2">Organization</label>
+                      <label className="block text-xs font-semibold mb-2" style={{ color: textMuted }}>Organization</label>
                       <input
                         value={form.org}
                         onChange={e => setForm(f => ({ ...f, org: e.target.value }))}
                         placeholder="Acme Robotics"
-                        className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-blue-300/25 outline-none transition-all"
-                        style={{ background: 'rgba(14,165,233,0.05)', border: '1px solid rgba(14,165,233,0.15)' }}
+                        className="w-full rounded-xl px-4 py-3 text-sm placeholder-blue-300/25 outline-none transition-all"
+                        style={{ background: inputBg, border: `1px solid ${inputBorder}`, color: inputText }}
                         onFocus={e => e.target.style.borderColor = 'rgba(6,182,212,0.45)'}
-                        onBlur={e => e.target.style.borderColor = 'rgba(14,165,233,0.15)'}
+                        onBlur={e => e.target.style.borderColor = inputBorder}
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-white/60 mb-2">Work Email *</label>
+                    <label className="block text-xs font-semibold mb-2" style={{ color: textMuted }}>Work Email *</label>
                     <input
                       type="email"
                       value={form.email}
                       onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                       placeholder="jane@company.com"
                       required
-                      className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder-blue-300/25 outline-none transition-all"
-                      style={{ background: 'rgba(14,165,233,0.05)', border: '1px solid rgba(14,165,233,0.15)' }}
+                      className="w-full rounded-xl px-4 py-3 text-sm placeholder-blue-300/25 outline-none transition-all"
+                      style={{ background: inputBg, border: `1px solid ${inputBorder}`, color: inputText }}
                       onFocus={e => e.target.style.borderColor = 'rgba(6,182,212,0.45)'}
-                      onBlur={e => e.target.style.borderColor = 'rgba(14,165,233,0.15)'}
+                      onBlur={e => e.target.style.borderColor = inputBorder}
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-white/60 mb-2">Role</label>
+                    <label className="block text-xs font-semibold mb-2" style={{ color: textMuted }}>Role</label>
                     <select
                       value={form.role}
                       onChange={e => setForm(f => ({ ...f, role: e.target.value }))}
-                      className="w-full rounded-xl px-4 py-3 text-sm text-white outline-none transition-all"
-                      style={{ background: 'rgba(14,165,233,0.05)', border: '1px solid rgba(14,165,233,0.15)' }}
+                      className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all"
+                      style={{ background: inputBg, border: `1px solid ${inputBorder}`, color: inputText }}
                     >
-                      <option value="" style={{ background: '#040d1a' }}>Select your role</option>
-                      <option value="founder" style={{ background: '#040d1a' }}>Founder / CEO</option>
-                      <option value="engineer" style={{ background: '#040d1a' }}>Robotics Engineer</option>
-                      <option value="researcher" style={{ background: '#040d1a' }}>Researcher / Academic</option>
-                      <option value="investor" style={{ background: '#040d1a' }}>Investor / VC</option>
-                      <option value="policy" style={{ background: '#040d1a' }}>Policy / Government</option>
-                      <option value="other" style={{ background: '#040d1a' }}>Other</option>
+                      <option value="" style={{ background: optionBg }}>Select your role</option>
+                      <option value="founder" style={{ background: optionBg }}>Founder / CEO</option>
+                      <option value="engineer" style={{ background: optionBg }}>Robotics Engineer</option>
+                      <option value="researcher" style={{ background: optionBg }}>Researcher / Academic</option>
+                      <option value="investor" style={{ background: optionBg }}>Investor / VC</option>
+                      <option value="policy" style={{ background: optionBg }}>Policy / Government</option>
+                      <option value="other" style={{ background: optionBg }}>Other</option>
                     </select>
                   </div>
                   <button
@@ -556,9 +569,9 @@ export default function LandingPage() {
                   >
                     Submit Application
                   </button>
-                  <p className="text-xs text-white/45 text-center">
+                  <p className="text-xs text-center" style={{ color: textFaint }}>
                     Already a member?{' '}
-                    <button type="button" onClick={enterPlatform} className="text-cyan-400/70 hover:text-cyan-300 transition-colors">
+                    <button type="button" onClick={enterPlatform} className="text-cyan-500/70 hover:text-cyan-500 transition-colors">
                       Sign in to the platform →
                     </button>
                   </p>
@@ -570,20 +583,20 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ────────────────────────────────────────────────────── */}
-      <footer className="relative z-10 border-t px-6 py-10" style={{ borderColor: 'rgba(14,165,233,0.08)', background: 'rgba(2,8,20,0.6)', backdropFilter: 'blur(12px)' }}>
+      <footer className="relative z-10 border-t px-6 py-10" style={{ borderColor: footerBorder, background: footerBg, backdropFilter: 'blur(12px)' }}>
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             {!logoFailed ? (
               <img src="/logo.png" alt="Robo Alliance" className="h-5 w-auto object-contain opacity-50"
-                style={{ filter: 'brightness(1.15)', mixBlendMode: 'screen' }} onError={() => setLogoFailed(true)} />
+                style={{ filter: isDark ? 'brightness(1.15)' : 'none', mixBlendMode: isDark ? 'screen' : 'multiply' }} onError={() => setLogoFailed(true)} />
             ) : (
-              <span className="text-sm font-semibold text-white/40">Robo Alliance</span>
+              <span className="text-sm font-semibold" style={{ color: textFaint }}>Robo Alliance</span>
             )}
           </div>
-          <p className="text-xs text-white/40">© 2026 Robo Alliance. The global network for intelligent robotics.</p>
+          <p className="text-xs" style={{ color: textFaint }}>© 2026 Robo Alliance. The global network for intelligent robotics.</p>
           <div className="flex items-center gap-4">
-            <button onClick={() => navigate('/leadership')} className="text-xs text-white/50 hover:text-white transition-colors">Leadership</button>
-            <button onClick={enterPlatform} className="text-xs text-white/50 hover:text-white transition-colors">Platform</button>
+            <button onClick={() => navigate('/leadership')} className="text-xs hover:text-cyan-500 transition-colors" style={{ color: textFaint }}>Leadership</button>
+            <button onClick={enterPlatform} className="text-xs hover:text-cyan-500 transition-colors" style={{ color: textFaint }}>Platform</button>
           </div>
         </div>
       </footer>
