@@ -163,7 +163,7 @@ export default function LandingPage() {
           <button onClick={() => navigate('/leadership')}
             className="text-sm text-white/65 hover:text-white transition-colors">Leadership</button>
           <button onClick={() => document.getElementById('apply')?.scrollIntoView({ behavior: 'smooth' })}
-            className="text-sm text-white/65 hover:text-white transition-colors">Apply for Premium</button>
+            className="text-sm text-white/65 hover:text-white transition-colors">Request Premium Access</button>
         </div>
 
         <div className="flex items-center gap-2">
@@ -178,7 +178,7 @@ export default function LandingPage() {
             className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:scale-105 hover:shadow-lg"
             style={{ background: 'linear-gradient(135deg, #0ea5e9, #0284c7)', boxShadow: '0 0 16px rgba(14,165,233,0.2)' }}
           >
-            Apply for Premium
+            Request Premium Access
           </button>
         </div>
       </nav>
@@ -221,7 +221,7 @@ export default function LandingPage() {
             className="group px-8 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-105 flex items-center gap-2"
             style={{ background: 'linear-gradient(135deg, #0ea5e9, #0284c7)', boxShadow: '0 0 28px rgba(14,165,233,0.28)' }}
           >
-            Join Free
+            Sign up — it's free
             <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
@@ -231,7 +231,7 @@ export default function LandingPage() {
             className="px-8 py-3.5 rounded-xl text-sm font-semibold text-blue-300 transition-all hover:text-white hover:border-cyan-500/40"
             style={{ border: '1px solid rgba(14,165,233,0.2)', background: 'rgba(14,165,233,0.04)' }}
           >
-            Apply for Premium
+            Request Premium Access
           </button>
         </div>
 
@@ -462,10 +462,23 @@ export default function LandingPage() {
             ) : (
               <>
                 <p className="text-xs font-bold tracking-widest uppercase text-white/50 mb-2">Premium Membership</p>
-                <h2 className="text-2xl font-black text-white mb-2 tracking-tight">Apply for Premium</h2>
-                <p className="text-sm text-white/65 mb-8 leading-relaxed">
-                  Free accounts are open to everyone. Premium membership unlocks exclusive access to investor relations, private channels, and standards committees. Apply below.
+                <h2 className="text-2xl font-black text-white mb-2 tracking-tight">Request Premium Access</h2>
+                <p className="text-sm text-white/65 mb-5 leading-relaxed">
+                  Premium membership unlocks exclusive investor relations, private channels, and standards committees. Free accounts are open to everyone — no application needed.
                 </p>
+                <button
+                  type="button"
+                  onClick={() => { enterPlatform(); setTimeout(() => setShowAuthModal(true), 540) }}
+                  className="w-full mb-6 py-2.5 rounded-xl text-sm font-semibold text-white/70 hover:text-white transition-all"
+                  style={{ background: 'rgba(14,165,233,0.06)', border: '1px solid rgba(14,165,233,0.18)' }}
+                >
+                  Just want a free account? Sign up here →
+                </button>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="flex-1 h-px" style={{ background: 'rgba(14,165,233,0.12)' }} />
+                  <span className="text-xs text-white/30">or apply for premium below</span>
+                  <div className="flex-1 h-px" style={{ background: 'rgba(14,165,233,0.12)' }} />
+                </div>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
