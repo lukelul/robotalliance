@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, Fragment } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { companies, people as mockPeople, roleBadgeColors, personTypeColors } from '../data/mockData'
 import Avatar from './Avatar'
@@ -67,6 +67,7 @@ export default function TopBar({ onSearch }) {
   const peopleResults = results.filter(r => r._kind === 'person')
 
   return (
+    <Fragment>
     <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-4 gap-4"
       style={{ background: 'rgba(10,15,30,0.92)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       {/* Search */}
@@ -214,5 +215,6 @@ export default function TopBar({ onSearch }) {
     >
       admin
     </Link>
+    </Fragment>
   )
 }
