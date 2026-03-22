@@ -2,29 +2,61 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase'
-import { useUser } from '../context/UserContext'
-
-const ADMIN_EMAILS = ['lukelupvp@gmail.com']
 
 const TABS = ['People', 'Companies', 'Events', 'News', 'Users', 'Posts']
 
 const inputCls = 'w-full px-3 py-2 rounded-lg border border-gray-200 text-sm text-gray-900 outline-none focus:border-[#0069b4] transition-colors bg-white'
 const labelCls = 'block text-xs font-semibold text-gray-500 mb-1'
 
-export default function AdminPage() {
-  const navigate = useNavigate()
-  const { firebaseUser, isLoading } = useUser()
-  const [tab, setTab] = useState('People')
+function AdminLogin({ onSuccess }) {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
-  const isAdmin = ADMIN_EMAILS.includes(firebaseUser?.email)
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (username === 'admin' && password === 'admin') {
+      sessionStorage.setItem('ra-admin', '1')
+      onSuccess()
+    } else {
+      setError('Invalid credentials.')
+    }
+  }
 
-  if (isLoading) return <div className="flex items-center justify-center h-screen text-gray-400 text-sm">Loading…</div>
-  if (!firebaseUser || !isAdmin) return (
-    <div className="flex flex-col items-center justify-center h-screen gap-4">
-      <p className="text-gray-500 text-sm">Access denied.</p>
-      <button onClick={() => navigate('/')} className="text-[#0069b4] text-sm underline">Go home</button>
+  return (
+    <div className="min-h-screen flex items-center justify-center" style={{ background: '#f8fafc' }}>
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 w-full max-w-sm">
+        <div className="mb-6 text-center">
+          <div className="w-12 h-12 rounded-xl bg-[#0069b4] flex items-center justify-center text-white font-bold text-lg mx-auto mb-4">RA</div>
+          <h1 className="text-xl font-bold text-gray-900">Admin Login</h1>
+          <p className="text-sm text-gray-400 mt-1">Robo Alliance Admin Panel</p>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className={labelCls}>Username</label>
+            <input value={username} onChange={e => setUsername(e.target.value)} placeholder="admin" autoComplete="username" className={inputCls} />
+          </div>
+          <div>
+            <label className={labelCls}>Password</label>
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••" autoComplete="current-password" className={inputCls} />
+          </div>
+          {error && <p className="text-xs text-red-500">{error}</p>}
+          <button type="submit" className="w-full py-2.5 rounded-full bg-[#0069b4] text-white text-sm font-semibold hover:bg-[#005a9e] transition-colors">
+            Sign In
+          </button>
+        </form>
+      </div>
     </div>
   )
+}
+
+export default function AdminPage() {
+  const navigate = useNavigate()
+  const [tab, setTab] = useState('People')
+  const [authed, setAuthed] = useState(() => sessionStorage.getItem('ra-admin') === '1')
+
+  if (!authed) return <AdminLogin onSuccess={() => setAuthed(true)} />
+
 
   return (
     <div className="pt-16 min-h-screen" style={{ background: '#f8fafc' }}>

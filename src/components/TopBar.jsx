@@ -4,9 +4,7 @@ import { companies, people as mockPeople, roleBadgeColors, personTypeColors } fr
 import Avatar from './Avatar'
 import { useUser } from '../context/UserContext'
 export default function TopBar({ onSearch }) {
-  const { profile, isGuest, setShowAuthModal, userPhoto, allUsers, firebaseUser } = useUser()
-  const ADMIN_EMAILS = ['lukelupvp@gmail.com']
-  const isAdmin = ADMIN_EMAILS.includes(firebaseUser?.email)
+  const { profile, isGuest, setShowAuthModal, userPhoto, allUsers } = useUser()
   const people = [...allUsers, ...mockPeople.filter(mp => !allUsers.some(u => u.name === mp.name))]
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
@@ -155,14 +153,6 @@ export default function TopBar({ onSearch }) {
 
       {/* Nav links */}
       <div className="shrink-0 hidden md:flex items-center gap-1">
-        {isAdmin && (
-          <button
-            onClick={() => navigate('/admin')}
-            className="text-xs font-bold uppercase tracking-widest px-3 py-2 rounded-lg bg-[#0069b4]/10 text-[#0069b4] hover:bg-[#0069b4]/20 transition-colors"
-          >
-            Admin
-          </button>
-        )}
         <button
           onClick={() => navigate('/leadership')}
           className="text-sm font-medium text-blue-300/40 hover:text-gray-900 transition-colors px-3 py-2"
