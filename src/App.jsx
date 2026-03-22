@@ -13,6 +13,7 @@ import { UserProvider, useUser } from './context/UserContext'
 import SettingsPage from './pages/SettingsPage'
 import LeadershipPage from './pages/LeadershipPage'
 import LandingPage from './pages/LandingPage'
+import AdminPage from './pages/AdminPage'
 import AuthModal from './components/AuthModal'
 import ProfileSetupModal from './components/ProfileSetupModal'
 
@@ -131,6 +132,7 @@ function AppInner() {
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/leadership" element={<LeadershipPage />} />
           <Route path="/welcome" element={<LandingPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </div>
       {location.pathname !== '/welcome' && <PostComposer />}
