@@ -8,7 +8,7 @@ import ServerPage from './pages/ServerPage'
 import ProfilePage from './pages/ProfilePage'
 import EventPage from './pages/EventPage'
 import { PostsProvider } from './context/PostsContext'
-import { ThemeProvider } from './context/ThemeContext'
+import { ThemeProvider, useTheme } from './context/ThemeContext'
 import { UserProvider, useUser } from './context/UserContext'
 import SettingsPage from './pages/SettingsPage'
 import LeadershipPage from './pages/LeadershipPage'
@@ -27,6 +27,7 @@ function AuthOverlays() {
 }
 
 function AppInner() {
+  const { showConnections } = useTheme()
   const [zoomTarget, setZoomTarget] = useState(null)
   const [zoomOutTrigger, setZoomOutTrigger] = useState(null)
   const [contentOpacity, setContentOpacity] = useState(0)
@@ -101,7 +102,7 @@ function AppInner() {
 
   return (
     <div className="relative min-h-screen" style={{ background: 'var(--bg)' }}>
-      <NetworkCanvas zoomTarget={zoomTarget} onZoomComplete={handleZoomComplete} zoomOutTrigger={zoomOutTrigger} onZoomOutComplete={handleZoomOutComplete} />
+      {showConnections && <NetworkCanvas zoomTarget={zoomTarget} onZoomComplete={handleZoomComplete} zoomOutTrigger={zoomOutTrigger} onZoomOutComplete={handleZoomOutComplete} />}
 
       {/* Radial glow overlay */}
       <div

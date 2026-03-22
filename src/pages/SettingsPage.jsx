@@ -6,7 +6,7 @@ import Avatar from '../components/Avatar'
 
 export default function SettingsPage() {
   const navigate = useNavigate()
-  const { theme, toggleTheme } = useTheme()
+  const { theme, toggleTheme, showConnections, toggleConnections } = useTheme()
   const { profile, firebaseUser, isGuest, userPhoto, updatePhoto, logout, setShowAuthModal } = useUser()
   const fileInputRef = useRef(null)
 
@@ -145,6 +145,25 @@ export default function SettingsPage() {
                 Switch to Dark
               </>
             )}
+          </button>
+        </div>
+      </div>
+
+      {/* Network connections toggle */}
+      <div className="rounded-2xl border border-blue-500/10 overflow-hidden mb-5" style={panelStyle}>
+        <div className="px-6 py-4 border-b border-blue-500/10">
+          <p className="text-xs text-blue-300/40 font-semibold uppercase tracking-widest">Display</p>
+        </div>
+        <div className="px-6 py-5 flex items-center justify-between">
+          <div>
+            <div className="text-sm font-medium text-white">Network Connections</div>
+            <div className="text-xs text-blue-300/40 mt-0.5">Show animated network graph in the background</div>
+          </div>
+          <button
+            onClick={toggleConnections}
+            className={`relative w-11 h-6 rounded-full transition-colors ${showConnections ? 'bg-cyan-500' : 'bg-blue-500/20'}`}
+          >
+            <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${showConnections ? 'translate-x-5' : 'translate-x-0'}`} />
           </button>
         </div>
       </div>

@@ -19,7 +19,7 @@
 }
 
 [data-theme="light"] {
-  --bg: #d8e4f0;
+  --bg: #ffffff;
   --surface: rgba(255, 255, 255, 0.94);
   --surface-solid: rgba(255, 255, 255, 0.99);
   --border: rgba(14, 100, 200, 0.25);
@@ -40,7 +40,7 @@ body {
 
 /* Light mode body override (handles canvas behind panels) */
 [data-theme="light"] body {
-  background: #d8e4f0;
+  background: #ffffff;
 }
 
 [data-theme="light"] #root {
