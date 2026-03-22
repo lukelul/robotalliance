@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react'
 import { usePosts } from '../context/PostsContext'
-import { currentUser, companies } from '../data/mockData'
+import { companies } from '../data/mockData'
 import { useTheme } from '../context/ThemeContext'
+import { useUser } from '../context/UserContext'
 
 const avatarGradients = {
   LL: '#00d4ff', RP: '#f59e0b', MP: '#f59e0b', EB: '#8b5cf6', SR: '#ec4899',
@@ -18,6 +19,7 @@ const destinationOptions = [
 export default function PostComposer() {
   const { addPost } = usePosts()
   const { theme } = useTheme()
+  const { profile, firebaseUser, isGuest, setShowAuthModal } = useUser()
   const L = theme === 'light'
 
   const [open, setOpen] = useState(false)
@@ -34,7 +36,7 @@ export default function PostComposer() {
   const photoRef = useRef(null)
   const videoRef = useRef(null)
 
-  const avatarColor = avatarGradients[currentUser.avatar] || '#00d4ff'
+  const avatarColor = avatarGradients[profile?.avatar] || profile?.color || '#00d4ff'
 
   // Theme-aware style tokens
   const T = {
@@ -114,8 +116,15 @@ export default function PostComposer() {
     }
     const destinationLabel = destinationOptions.find(d => d.value === destination)?.label || 'My Profile'
     addPost({
-      author: currentUser.name, avatar: currentUser.avatar, color: avatarColor,
-      title: currentUser.title, content: content.trim(), tags: finalTags, destination: destinationLabel,
+      author: profile?.name || 'Anonymous',
+      authorId: firebaseUser?.uid || null,
+      avatar: profile?.avatar || '?',
+      color: avatarColor,
+      photo: profile?.photo || null,
+      title: profile?.title || profile?.type || '',
+      content: content.trim(),
+      tags: finalTags,
+      destination: destinationLabel,
     })
     setTimeout(() => { setSubmitting(false); handleClose() }, 320)
   }
@@ -130,7 +139,7 @@ export default function PostComposer() {
           animation: 'composerPulse 2.2s ease-out infinite', pointerEvents: 'none',
         }} />
         <button
-          onClick={() => setOpen(true)}
+          onClick={() => isGuest ? setShowAuthModal(true) : setOpen(true)}
           onMouseEnter={() => setHoverBtn(true)}
           onMouseLeave={() => setHoverBtn(false)}
           title="New Post"
@@ -200,11 +209,11 @@ export default function PostComposer() {
                   border: `2px solid ${avatarColor}66`, display: 'flex', alignItems: 'center',
                   justifyContent: 'center', fontSize: '14px', fontWeight: 700, color: '#fff', flexShrink: 0,
                 }}>
-                  {currentUser.avatar}
+                  {profile?.avatar || '?'}
                 </div>
                 <div>
-                  <div style={{ color: T.titleColor, fontSize: '14px', fontWeight: 600 }}>{currentUser.name}</div>
-                  <div style={{ color: T.labelColor, fontSize: '12px' }}>{currentUser.title}</div>
+                  <div style={{ color: T.titleColor, fontSize: '14px', fontWeight: 600 }}>{profile?.name || 'Anonymous'}</div>
+                  <div style={{ color: T.labelColor, fontSize: '12px' }}>{profile?.title || profile?.type || ''}</div>
                 </div>
               </div>
 

@@ -1,11 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import { usePosts } from '../context/PostsContext'
+import { useUser } from '../context/UserContext'
 import { avatarGradients, companies } from '../data/mockData'
 import Avatar from './Avatar'
 
 export default function PostCard({ post }) {
   const { toggleLike } = usePosts()
+  const { firebaseUser } = useUser()
   const navigate = useNavigate()
+
+  const liked = post._firestore
+    ? post.likedBy?.includes(firebaseUser?.uid)
+    : post.liked
 
   const company = post.serverId ? companies.find(c => c.id === post.serverId) : null
   const avatarBg = avatarGradients[post.avatar] || post.color || '#0ea5e9'
@@ -73,9 +79,9 @@ export default function PostCard({ post }) {
         {/* Actions */}
         <div className="flex items-center gap-4 pt-2 border-t border-blue-500/08">
           <button
-            onClick={() => toggleLike(post.id)}
-            className={`flex items-center gap-1.5 text-xs transition-colors ${post.liked ? 'text-pink-400' : 'text-blue-300/40 hover:text-pink-400'}`}>
-            <svg className="w-3.5 h-3.5" fill={post.liked ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor">
+            onClick={() => toggleLike(post.id, firebaseUser?.uid)}
+            className={`flex items-center gap-1.5 text-xs transition-colors ${liked ? 'text-pink-400' : 'text-blue-300/40 hover:text-pink-400'}`}>
+            <svg className="w-3.5 h-3.5" fill={liked ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
             {post.likes}

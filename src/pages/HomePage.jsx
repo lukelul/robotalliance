@@ -33,7 +33,7 @@ const blkStyle = { background: 'var(--surface)', backdropFilter: 'blur(14px)' }
 export default function HomePage({ onNavigate }) {
   const navigate = useNavigate()
   const { posts } = usePosts()
-  const { allUsers } = useUser()
+  const { allUsers, profile, isGuest } = useUser()
 
   // Merge mockData people with real Firestore users (real users appear first)
   const people = [
@@ -42,6 +42,7 @@ export default function HomePage({ onNavigate }) {
   ]
   const [favs, setFavs] = useState(['boston-dynamics', 'figure-ai'])
   const [postTab, setPostTab] = useState('all')
+  const [sortTab, setSortTab] = useState('newest')
 
   const toggleFav = (id) => setFavs(f => f.includes(id) ? f.filter(x => x !== id) : [...f, id])
   const favCompanies = companies.filter(c => favs.includes(c.id))
@@ -49,7 +50,26 @@ export default function HomePage({ onNavigate }) {
   const filteredPosts = postTab === 'all'
     ? posts
     : posts.filter(p => p.serverId === postTab || p.destination === companies.find(c => c.id === postTab)?.name)
-  const topPosts = [...filteredPosts].sort((a, b) => b.likes - a.likes).slice(0, 6)
+
+  const now = Date.now()
+  const sortedPosts = [...filteredPosts].sort((a, b) => {
+    if (sortTab === 'newest') {
+      const ta = a.createdAt?.toMillis?.() ?? 0
+      const tb = b.createdAt?.toMillis?.() ?? 0
+      return tb - ta
+    }
+    if (sortTab === 'top') return b.likes - a.likes
+    if (sortTab === 'hot') {
+      // score = likes / (hours since post + 2)^1.5
+      const score = p => {
+        const ms = p.createdAt?.toMillis?.() ?? (now - 1000 * 60 * 60 * 24)
+        const hours = (now - ms) / 3600000
+        return p.likes / Math.pow(hours + 2, 1.5)
+      }
+      return score(b) - score(a)
+    }
+    return 0
+  }).slice(0, 10)
 
   return (
     <div className="page-enter pt-20 pb-12 px-4 max-w-7xl mx-auto relative z-10">
@@ -57,7 +77,7 @@ export default function HomePage({ onNavigate }) {
       <div className="mb-8">
         <p className="text-xs font-semibold tracking-widest uppercase text-blue-300/30 mb-1">Robo Alliance</p>
         <h1 className="text-2xl font-semibold tracking-tight text-white">
-          Welcome back, <span className="text-cyan-400">{currentUser.name}</span>
+          {isGuest ? 'Welcome to ' : 'Welcome back, '}<span className="text-cyan-400">{isGuest ? 'Robo Alliance' : (profile?.name || currentUser.name)}</span>
         </h1>
         <p className="text-blue-300/40 text-sm mt-1 tracking-wide">The robotics industry, connected.</p>
       </div>
@@ -98,8 +118,16 @@ export default function HomePage({ onNavigate }) {
 
           {/* Top Posts */}
           <div className="rounded-xl overflow-hidden border border-blue-500/10" style={blkStyle}>
-            <div className="px-4 py-3 border-b border-blue-500/10">
-              <h2 className="text-xs font-semibold tracking-widest uppercase text-blue-300/50">Top Posts</h2>
+            <div className="px-4 py-3 border-b border-blue-500/10 flex items-center justify-between">
+              <h2 className="text-xs font-semibold tracking-widest uppercase text-blue-300/50">Posts</h2>
+              <div className="flex gap-1">
+                {['newest', 'top', 'hot'].map(s => (
+                  <button key={s} onClick={() => setSortTab(s)}
+                    className={`px-2.5 py-1 text-xs rounded transition-colors ${sortTab === s ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30' : 'text-blue-300/50 hover:text-white hover:bg-blue-500/10'}`}>
+                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                  </button>
+                ))}
+              </div>
             </div>
             <div className="flex items-center gap-1 px-3 py-2 border-b border-blue-500/10 flex-wrap">
               {[{ id: 'all', name: 'All' }, ...companies.map(c => ({ id: c.id, name: c.name }))].map(tab => (
@@ -110,9 +138,9 @@ export default function HomePage({ onNavigate }) {
               ))}
             </div>
             <div>
-              {topPosts.length === 0 && <p className="text-xs text-blue-300/30 text-center py-6">No posts yet.</p>}
-              {topPosts.map((post, i) => (
-                <div key={post.id} className="p-3" style={i < topPosts.length - 1 ? { borderBottom: '1px solid rgba(14,165,233,0.08)' } : {}}>
+              {sortedPosts.length === 0 && <p className="text-xs text-blue-300/30 text-center py-6">No posts yet.</p>}
+              {sortedPosts.map((post, i) => (
+                <div key={post.id} className="p-3" style={i < sortedPosts.length - 1 ? { borderBottom: '1px solid rgba(14,165,233,0.08)' } : {}}>
                   <PostCard post={post} />
                 </div>
               ))}
